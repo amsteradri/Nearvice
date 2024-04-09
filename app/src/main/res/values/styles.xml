@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BotonEstilo">
+        <!-- Estilos de tu botón aquí -->
+        <item name="android:layout_width">wrap_content</item> <!-- O 0dp si vas a usar constraints -->
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/fondo_boton</item> <!-- Asegúrate de que este drawable exista -->
+        <item name="android:textColor">@color/color_texto_boton</item> <!-- Asegúrate de que este color exista -->
+        <!-- Otros atributos del estilo -->
+    </style>
+
+</resources>

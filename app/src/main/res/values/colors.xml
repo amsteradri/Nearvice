@@ -1,0 +1,5 @@
+<resources>
+    <!-- Define your colors here -->
+    <color name="google_button_color">#FF0000</color> <!-- Replace with actual color code -->
+    <color name="apple_button_color">#000000</color> <!-- Replace with actual color code -->
+</resources>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="username_hint">Nombre de usuario</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="continue_with_google">Continuar con Google</string>
+    <string name="continue_with_apple">Continuar con Apple</string>
+    <string name="sign_in">Iniciar sesión</string>
+    <string name="register">Registrarse</string>
+</resources>
