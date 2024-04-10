@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+
 
 Color brokenWhite = Color(0xFFFFFEEE); // Esto representa un blanco con un toque de gris
 
@@ -126,12 +130,22 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   Container(
                     width: formWidth,
-                    child: TextButton.icon(
+                    child: TextButton(
                       onPressed: () {}, // Acción al presionar
-                      icon: const Icon(Icons.login, color: Colors.white),
-                      label: const Text('Continuar con Google'),
                       style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all(Colors.white),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min, // Ajusta al contenido
+                        children: [
+                          SvgPicture.asset(
+                            'assets/images/google.svg', // Asegúrate de que esta es la ruta correcta
+                            width: 20,
+                            height: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text('Continuar con Google'),
+                        ],
                       ),
                     ),
                   ),
