@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+Color brokenWhite = Color(0xFFFFFEEE); // Esto representa un blanco con un toque de gris
+
 void main() {
   runApp(const NearviceApp());
 }
@@ -39,17 +41,24 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double padding = screenWidth * 0.1; // 10% padding on both sides
-    double formWidth = screenWidth - padding * 2; // Subtract the padding from the total width
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final double beginX = screenWidth / sqrt(screenWidth * screenWidth + screenHeight * screenHeight) * 5.5;
+    final double beginY = -screenHeight / sqrt(screenWidth * screenWidth + screenHeight * screenHeight) * 0.2;
+    final double endX = screenWidth / sqrt(screenWidth * screenWidth + screenHeight * screenHeight) * 1.2;
+    final double endY = screenHeight / sqrt(screenWidth * screenWidth + screenHeight * screenHeight) * 1.2;
+    final logoSize = screenHeight * 0.224;
+    final double padding = screenWidth * 0.1;
+    final double formWidth = screenWidth - padding * 2;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false, // Añadido para evitar que el contenido se mueva hacia arriba
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment(4.75, 0), // Más inclinado desde la parte superior
-            end: Alignment(2, 2), // Más inclinado hacia la parte inferior
-            colors: [Colors.white, Colors.black],
+            begin: Alignment(beginX, beginY),
+            end: Alignment(endX, endY),
+            colors: [brokenWhite, Colors.black],
             stops: [0.35, 0.35],
           ),
         ),
@@ -62,12 +71,16 @@ class LoginPage extends StatelessWidget {
                 children: [
                   Container(
                     width: formWidth,
-                    child: Transform.rotate(
-                      angle: 0.6, // Rotación de 60 grados en radianes.
-                      child: Image.asset('assets/images/logo.png'),
+                    height: logoSize * 1.3,
+                    child: Transform.translate(
+                      offset: Offset(0, screenHeight * 0.117),
+                      child: Transform.rotate(
+                        angle: 0.617,
+                        child: Image.asset('assets/images/logo.png'),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 200),
+                  const SizedBox(height: 170),
                   Container(
                     width: formWidth,
                     child: TextFormField(
@@ -83,46 +96,40 @@ class LoginPage extends StatelessWidget {
                       decoration: const InputDecoration(
                         hintText: 'Contraseña',
                       ),
-                      obscureText: true,
+                      obscureText: true, // Correctamente movido aquí
                     ),
                   ),
                   const SizedBox(height: 24),
                   Container(
                     width: formWidth,
                     child: ElevatedButton(
-                      child: const Text('Iniciar sesión'),
-                      onPressed: () {
-                        // Handle login logic
-                      },
+                      onPressed: () {}, // Acción al presionar
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.black),
                         foregroundColor: MaterialStateProperty.all(Colors.white),
                       ),
+                      child: const Text('Iniciar sesión'),
                     ),
                   ),
                   const SizedBox(height: 8),
                   Container(
                     width: formWidth,
                     child: OutlinedButton(
-                      child: const Text('Registrarse'),
-                      onPressed: () {
-                        // Handle registration logic
-                      },
+                      onPressed: () {}, // Acción al presionar
                       style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all(Colors.white),
                         side: MaterialStateProperty.all(BorderSide(color: Colors.white)),
                       ),
+                      child: const Text('Registrarse'),
                     ),
                   ),
                   const SizedBox(height: 16),
                   Container(
                     width: formWidth,
                     child: TextButton.icon(
+                      onPressed: () {}, // Acción al presionar
                       icon: const Icon(Icons.login, color: Colors.white),
                       label: const Text('Continuar con Google'),
-                      onPressed: () {
-                        // Handle Google login logic
-                      },
                       style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all(Colors.white),
                       ),
@@ -132,11 +139,9 @@ class LoginPage extends StatelessWidget {
                   Container(
                     width: formWidth,
                     child: TextButton.icon(
+                      onPressed: () {}, // Acción al presionar
                       icon: const Icon(Icons.apple, color: Colors.white),
                       label: const Text('Continuar con Apple'),
-                      onPressed: () {
-                        // Handle Apple login logic
-                      },
                       style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all(Colors.white),
                       ),
@@ -151,3 +156,4 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
