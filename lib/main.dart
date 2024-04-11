@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'profile_page.dart';
+
 
 Color brokenWhite = Color(0xFFFFFEEE); // Esto representa un blanco con un toque de gris
 
@@ -51,6 +53,7 @@ class LoginPage extends StatelessWidget {
     final logoSize = screenHeight * 0.15;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -105,7 +108,12 @@ class LoginPage extends StatelessWidget {
 
                       SizedBox(height: 24),
                       OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const SegundaPantalla()),
+                          );
+                        },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.black),
                           foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -140,7 +148,7 @@ class LoginPage extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            SvgPicture.asset('assets/images/google.svg', width: 24, height: 24), // Ajusta el tamaño si es necesario
+                            SvgPicture.asset('assets/images/google.svg', width: 20, height: 20), // Ajusta el tamaño si es necesario
                             SizedBox(width: 8),
                             Text('Continuar con Google'),
                           ],
