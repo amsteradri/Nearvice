@@ -12,25 +12,18 @@ class NearviceApp extends StatefulWidget {
 class _NearviceAppState extends State<NearviceApp> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text('Inicio'), // Puedes reemplazar este Text widget con tu propia página de inicio
-    Text('Mapa'), // Puedes reemplazar este Text widget con tu propia página de mapa
-    Text('Actividad'), // Puedes reemplazar este Text widget con tu propia página de actividad
-    Text('Perfil'), // Puedes reemplazar este Text widget con tu propia página de perfil
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
-  TextEditingController _searchController = TextEditingController(); // Controlador de texto
-  bool _isSearchFocused = false; // Estado de foco de búsqueda
+  TextEditingController _searchController = TextEditingController();
+  bool _isSearchFocused = false;
 
   @override
   void dispose() {
-    _searchController.dispose(); // Liberar recursos del controlador de texto
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -39,44 +32,42 @@ class _NearviceAppState extends State<NearviceApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black, // Color de fondo del AppBar (ahora es negro)
-          elevation: 0, // Eliminar sombra del AppBar
-          titleSpacing: 0, // Espacio alrededor del título del AppBar
-          toolbarHeight: 85, // Ajustar la altura del AppBar
+          backgroundColor: Colors.black,
+          elevation: 0,
+          titleSpacing: 0,
+          toolbarHeight: 85,
           title: GestureDetector(
             onTap: () {
               setState(() {
-                _isSearchFocused = true; // Al hacer clic en la barra de búsqueda, establecer el estado de foco en verdadero
+                _isSearchFocused = true;
               });
             },
             child: Container(
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16), // Margen interno del contenedor
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               decoration: BoxDecoration(
-                color: Colors.grey[200], // Color de fondo del contenedor
-                borderRadius: BorderRadius.circular(20), // Bordes redondeados del contenedor
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 children: [
                   SizedBox(width: 10),
-                  Icon(Icons.search, color: Colors.grey), // Icono de búsqueda
+                  Icon(Icons.search, color: Colors.grey),
                   Expanded(
                     child: TextField(
-                      controller: _searchController, // Asignar controlador de texto al TextField
+                      controller: _searchController,
                       decoration: InputDecoration(
-                        hintText: 'Buscar...', // Texto de sugerencia
-                        border: InputBorder.none, // Sin borde alrededor del TextField
+                        hintText: 'Buscar...',
+                        border: InputBorder.none,
                       ),
                       onChanged: (text) {
-                        // Si el texto está cambiando, mostrar u ocultar el icono de limpiar
                         setState(() {});
                       },
                     ),
                   ),
-                  if (_searchController.text.isNotEmpty) // Mostrar el icono de limpiar solo si hay texto en el TextField
+                  if (_searchController.text.isNotEmpty)
                     IconButton(
-                      icon: Icon(Icons.clear, color: Colors.grey), // Icono de limpiar
+                      icon: Icon(Icons.clear, color: Colors.grey),
                       onPressed: () {
-                        // Limpiar el texto del TextField
                         _searchController.clear();
                         setState(() {});
                       },
@@ -87,56 +78,258 @@ class _NearviceAppState extends State<NearviceApp> {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 8.0), // Ajustar el espacio desde la derecha
+              padding: const EdgeInsets.only(right: 8.0),
               child: IconButton(
-                icon: Icon(Icons.filter_alt_outlined, color: Colors.grey), // Icono de filtros
-                onPressed: () {
-                  // Acción al hacer clic en el icono de filtros
-                },
+                icon: Icon(Icons.filter_alt_outlined, color: Colors.grey),
+                onPressed: () {},
               ),
             ),
           ],
-          iconTheme: IconThemeData(size: 28), // Tamaño del icono de menú
+          iconTheme: IconThemeData(size: 28),
         ),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex), // Contenido de la aplicación
+        body: ListView(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
+                );
+              },
+              child: ServiceCard(
+                service: Service(
+                  providerName: 'Nombre del proveedor',
+                  serviceName: 'Fontanero',
+                  rating: 4.5,
+                  distance: 5.2,
+                  isOpen: true,
+                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
+                );
+              },
+              child: ServiceCard(
+                service: Service(
+                  providerName: 'Nombre del proveedor',
+                  serviceName: 'Electricista',
+                  rating: 4.5,
+                  distance: 5.2,
+                  isOpen: true,
+                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
+                );
+              },
+              child: ServiceCard(
+                service: Service(
+                  providerName: 'Nombre del proveedor',
+                  serviceName: 'Carpintero',
+                  rating: 4.5,
+                  distance: 5.2,
+                  isOpen: true,
+                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
+                );
+              },
+              child: ServiceCard(
+                service: Service(
+                  providerName: 'Nombre del proveedor',
+                  serviceName: 'Niñera',
+                  rating: 4.5,
+                  distance: 5.2,
+                  isOpen: true,
+                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
+                );
+              },
+              child: ServiceCard(
+                service: Service(
+                  providerName: 'Nombre del proveedor',
+                  serviceName: 'Cocinero',
+                  rating: 4.5,
+                  distance: 5.2,
+                  isOpen: true,
+                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
+                );
+              },
+              child: ServiceCard(
+                service: Service(
+                  providerName: 'Nombre del proveedor',
+                  serviceName: 'Mecanico',
+                  rating: 4.5,
+                  distance: 5.2,
+                  isOpen: true,
+                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                ),
+              ),
+            ),
+
+          ],
         ),
         bottomNavigationBar: SizedBox(
-          height: 90, // Ajustar la altura del contenedor para el menú inferior
+          height: 90,
           child: Container(
-            color: Colors.black, // Color de fondo de la barra de navegación
+            color: Colors.black,
             child: BottomNavigationBar(
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.home, color: Colors.white, size:35),
+                  icon: Icon(Icons.home, color: Colors.white, size: 35),
                   label: 'Inicio',
                   backgroundColor: Colors.black,
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.map, color: Colors.white, size:35),
+                  icon: Icon(Icons.map, color: Colors.white, size: 35),
                   label: 'Mapa',
                   backgroundColor: Colors.black,
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.notifications, color: Colors.white, size:35),
+                  icon: Icon(Icons.notifications, color: Colors.white, size: 35),
                   label: 'Actividad',
                   backgroundColor: Colors.black,
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.person, color: Colors.white, size:35),
+                  icon: Icon(Icons.person, color: Colors.white, size: 35),
                   label: 'Perfil',
                   backgroundColor: Colors.black,
                 ),
               ],
               currentIndex: _selectedIndex,
-              selectedItemColor: Colors.black, // Color de ícono seleccionado
-              unselectedItemColor: Colors.white, // Color de ícono no seleccionado
-              selectedLabelStyle: TextStyle(color: Colors.white), // Estilo de texto seleccionado
-              unselectedLabelStyle: TextStyle(color: Colors.white), // Estilo de texto no seleccionado
+              selectedItemColor: Colors.black,
+              unselectedItemColor: Colors.white,
+              selectedLabelStyle: TextStyle(color: Colors.white),
+              unselectedLabelStyle: TextStyle(color: Colors.white),
               onTap: _onItemTapped,
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class Service {
+  String providerName;
+  String serviceName;
+  double rating;
+  double distance;
+  bool isOpen;
+  AssetImage profileImage;
+
+  Service({
+    required this.providerName,
+    required this.serviceName,
+    required this.rating,
+    required this.distance,
+    required this.isOpen,
+    required this.profileImage,
+  });
+}
+
+class ServiceCard extends StatelessWidget {
+  final Service service;
+
+  ServiceCard({required this.service});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(16),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: service.profileImage,
+                  radius: 30,
+                ),
+                SizedBox(width: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      service.providerName,
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      service.serviceName, // Mostrar el nombre del servicio
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.star, color: Colors.yellow),
+                        Text(service.rating.toString()),
+                      ],
+                    ),
+                  ],
+                ),
+                Expanded(child: Container()),
+                Text(
+                  '${service.distance} km',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 8),
+                Text(
+                  service.isOpen ? 'Abierto' : 'Cerrado',
+                  style: TextStyle(
+                    color: service.isOpen ? Colors.green : Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ServiceDetailsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Detalles del Servicio'),
+      ),
+      body: Center(
+        child: Text('Página de detalles del servicio'),
       ),
     );
   }
