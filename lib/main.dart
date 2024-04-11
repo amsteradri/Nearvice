@@ -1,185 +1,179 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'profile_page.dart';
+
+
+Color brokenWhite = Color(0xFFFFFEEE); // Esto representa un blanco con un toque de gris
 
 void main() {
-  runApp(NearviceApp());
+  runApp(const NearviceApp());
 }
 
-class NearviceApp extends StatefulWidget {
-  @override
-  _NearviceAppState createState() => _NearviceAppState();
-}
-
-class _NearviceAppState extends State<NearviceApp> {
-  TextEditingController _searchController = TextEditingController(); // Controlador de texto
-
-  bool _isSearchFocused = false; // Estado de foco de búsqueda
-
-  @override
-  void dispose() {
-    _searchController.dispose(); // Liberar recursos del controlador de texto
-    super.dispose();
-  }
+class NearviceApp extends StatelessWidget {
+  const NearviceApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black, // Color de fondo del AppBar (ahora es negro)
-          elevation: 0, // Eliminar sombra del AppBar
-          titleSpacing: 0, // Espacio alrededor del título del AppBar
-          toolbarHeight: 85, // Ajustar la altura del AppBar
-          title: GestureDetector(
-            onTap: () {
-              setState(() {
-                _isSearchFocused = true; // Al hacer clic en la barra de búsqueda, establecer el estado de foco en verdadero
-              });
-            },
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16), // Margen interno del contenedor
-              decoration: BoxDecoration(
-                color: Colors.grey[200], // Color de fondo del contenedor
-                borderRadius: BorderRadius.circular(20), // Bordes redondeados del contenedor
-              ),
-              child: Row(
-                children: [
-                  SizedBox(width: 10),
-                  Icon(Icons.search, color: Colors.grey), // Icono de búsqueda
-                  Expanded(
-                    child: TextField(
-                      controller: _searchController, // Asignar controlador de texto al TextField
-                      decoration: InputDecoration(
-                        hintText: 'Buscar...', // Texto de sugerencia
-                        border: InputBorder.none, // Sin borde alrededor del TextField
-                      ),
-                      onChanged: (text) {
-                        // Si el texto está cambiando, mostrar u ocultar el icono de limpiar
-                        setState(() {});
-                      },
+      title: 'Nearvice',
+      theme: ThemeData.dark().copyWith(
+        colorScheme: ColorScheme.dark().copyWith(
+          primary: Colors.black,
+          secondary: Colors.white,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          filled: true,
+          fillColor: Colors.white24,
+        ),
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.white,
+          textTheme: ButtonTextTheme.primary,
+        ),
+      ),
+      home: const LoginPage(),
+    );
+  }
+}
+
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final padding = screenWidth * 0.1;
+    final formWidth = screenWidth - padding * 2;
+
+    // Calcula el tamaño del logo como una fracción de la altura de la pantalla para mantenerlo responsivo.
+    final logoSize = screenHeight * 0.15;
+
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [brokenWhite, Colors.black],
+            stops: [0.35, 0.35],
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Center(
+                  child: Transform.translate(
+                    // Calcula el offset como un porcentaje de la altura de la pantalla
+                    offset: Offset(0, screenHeight * 0.075), // Por ejemplo, mueve el logo un 8% hacia abajo.
+                    child: Transform.rotate(
+                      angle: 0.48, // Rotación ajustada, si es necesaria.
+                      child: Image.asset('assets/images/logo.png', height: logoSize),
                     ),
                   ),
-                  if (_searchController.text.isNotEmpty) // Mostrar el icono de limpiar solo si hay texto en el TextField
-                    IconButton(
-                      icon: Icon(Icons.clear, color: Colors.grey), // Icono de limpiar
-                      onPressed: () {
-                        // Limpiar el texto del TextField
-                        _searchController.clear();
-                        setState(() {});
-                      },
-                    ),
-                ],
+                ),
               ),
-            ),
-          ),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.add, color: Colors.grey), // Icono de agregar
-              onPressed: () {
-                // Acción al hacer clic en el icono de agregar
-              },
-            ),
-          ],
-          iconTheme: IconThemeData(size: 28), // Tamaño del icono de menú
-        ),
-        body: Center(
-          child: Text('Contenido de la aplicación'), // Contenido de la aplicación
-        ),
-      ),
-    );
-  }
-}
 
+              SizedBox(height: 20),
+              Expanded(
+                flex: 3,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 25), // Aumenta este valor para hacer los campos de texto menos anchos
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            hintText: 'Nombre de usuario',
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 25), // Ajusta este valor según necesites
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            hintText: 'Contraseña',
+                          ),
+                          obscureText: true,
+                        ),
+                      ),
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-import 'package:flutter/material.dart';
-
-void main() {
-  runApp(NearviceApp());
-}
-
-class NearviceApp extends StatefulWidget {
-  @override
-  _NearviceAppState createState() => _NearviceAppState();
-}
-
-class _NearviceAppState extends State<NearviceApp> {
-  int _selectedIndex = 0;
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text('Inicio'), // Puedes reemplazar este Text widget con tu propia página de inicio
-    Text('Mapa'), // Puedes reemplazar este Text widget con tu propia página de mapa
-    Text('Actividad'), // Puedes reemplazar este Text widget con tu propia página de actividad
-    Text('Perfil'), // Puedes reemplazar este Text widget con tu propia página de perfil
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Inicio'),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                // Acción al hacer clic en el icono de búsqueda
-              },
-            ),
-          ],
-        ),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Colors.black, // Color de fondo de la BottomNavigationBar
-          ),
-          child: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Inicio',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.map),
-                label: 'Mapa',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.notifications),
-                label: 'Actividad',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Perfil',
+                      SizedBox(height: 24),
+                      OutlinedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const SegundaPantalla()),
+                          );
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.black),
+                          foregroundColor: MaterialStateProperty.all(Colors.white),
+                          padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0)), // Aumenta el padding
+                          textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)), // Aumenta el tamaño del texto
+                          minimumSize: MaterialStateProperty.all(Size(180, 50)), // Establece un tamaño mínimo para el botón
+                        ),
+                        child: const Text('Iniciar sesión'),
+                      ),
+                      SizedBox(height: 8),
+                      OutlinedButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all(Colors.white),
+                          side: MaterialStateProperty.all(BorderSide(color: Colors.white)),
+                          padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0)), // Aumenta el padding
+                          textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)), // Aumenta el tamaño del texto
+                          minimumSize: MaterialStateProperty.all(Size(180, 50)), // Establece un tamaño mínimo para el botón
+                        ),
+                        child: const Text('Registrarse'),
+                      ),
+                      SizedBox(height: 16),
+// Ajuste aquí para el icono de Google SVG.
+                      TextButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all(Colors.white),
+                          padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0)), // Aumenta el padding
+                          textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)), // Ajusta el tamaño del texto
+                          minimumSize: MaterialStateProperty.all(Size(180, 50)), // Establece un tamaño mínimo para el botón
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset('assets/images/google.svg', width: 20, height: 20), // Ajusta el tamaño si es necesario
+                            SizedBox(width: 8),
+                            Text('Continuar con Google'),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      TextButton.icon(
+                        onPressed: () {},
+                        icon: Icon(Icons.apple, color: Colors.white),
+                        label: Text('Continuar con Apple'),
+                        style: ButtonStyle(
+                          foregroundColor: MaterialStateProperty.all(Colors.white),
+                          padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0)), // Aumenta el padding
+                          textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)), // Aumenta el tamaño del texto
+                          minimumSize: MaterialStateProperty.all(Size(180, 50)), // Establece un tamaño mínimo para el botón
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.black, // Color de ícono seleccionado
-            unselectedItemColor: Colors.black, // Color de ícono no seleccionado
-            onTap: _onItemTapped,
           ),
         ),
       ),
     );
   }
 }
-*/
