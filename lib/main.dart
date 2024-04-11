@@ -104,7 +104,7 @@ class LoginPage extends StatelessWidget {
                       ),
 
                       SizedBox(height: 24),
-                      ElevatedButton(
+                      OutlinedButton(
                         onPressed: () {},
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.black),
