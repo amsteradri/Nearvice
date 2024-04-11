@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SegundaPantalla extends StatelessWidget {
   const SegundaPantalla({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double progressPercent = 0.3; // El progreso del usuario en porcentaje (30%)
+    double progressPercent = 0.5; // El progreso del usuario en porcentaje (50%)
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('MI PERFIL'),
         centerTitle: true,
-        backgroundColor: Colors.black, // Fondo negro para la AppBar
+        backgroundColor: Colors.black,
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -22,97 +21,176 @@ class SegundaPantalla extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            Text(
-              'Michael Jackson',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 20),
+          Text(
+            'Michael Jackson',
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
             ),
-            const SizedBox(height: 20),
-            Text(
-              '${(progressPercent * 100).toInt()}%',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            '${(progressPercent * 100).toInt()}%',
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
             ),
-            const SizedBox(height: 10),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  width: 120,
-                  height: 120,
-                  child: CircularProgressIndicator(
-                    value: progressPercent,
-                    backgroundColor: Colors.grey.shade300,
-                    color: Colors.blue,
-                    strokeWidth: 6,
+          ),
+          const SizedBox(height: 10),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                width: 120,
+                height: 120,
+                child: CircularProgressIndicator(
+                  value: progressPercent,
+                  backgroundColor: Colors.grey.shade300,
+                  color: Colors.blue,
+                  strokeWidth: 6,
+                ),
+              ),
+              const CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('assets/images/profile_pic.jpg'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          const Text(
+            'Nivel 1',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    'Valoraciones 30.000',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min, // Esto asegura que la fila solo sea tan ancha como sus hijos
+                    children: List.generate(5, (index) {
+                      return Icon(
+                        Icons.star,
+                        color: Colors.amber, // Color amarillo para las estrellas, típicamente usado para valoraciones
+                        size: 16, // Tamaño de las estrellas
+                      );
+                    }),
+                  ),
+                  // Continúa con más widgets si es necesario
+                ],
+              ),
+              SizedBox(width: 30),
+              Column(
+                children: [
+                  Text(
+                    'Servicios \nperfectos: 300',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 30),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                Expanded(
+                  child: Text(
+                    'Logros',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage('assets/images/profile_pic.jpg'),
+                VerticalDivider(width: 1),
+                Expanded(
+                  child: Text(
+                    'Recompensas',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            Text(
-              'Nivel 1',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ),
+          Expanded(
+            // Esta sección se hará desplazable
+            child: ListView(
               children: [
-                Column(
-                  children: [
-                    Text(
-                      'Valoraciones 30.000',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                    // Aquí puedes añadir tu widget de estrellas o cualquier otra representación
-                  ],
+
+                // ... Lista de logros y recompensas desplazable ...
+                Card(
+                  margin: const EdgeInsets.all(8.0),
+                  child: const ListTile(
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    subtitle: Text('2/10'),
+                    trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  ),
                 ),
-                Column(
-                  children: [
-                    Text(
-                      'Servicios Perfectos: 300',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                  ],
+                Card(
+                  color: Colors.green[300], // Resalta el logro alcanzado
+                  margin: const EdgeInsets.all(8.0),
+                  child: const ListTile(
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    subtitle: Text('10/10'),
+                    trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  ),
                 ),
+                Card(
+                  margin: const EdgeInsets.all(8.0),
+                  child: const ListTile(
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    subtitle: Text('2/10'),
+                    trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  ),
+                ),
+                Card(
+                  margin: const EdgeInsets.all(8.0),
+                  child: const ListTile(
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    subtitle: Text('2/10'),
+                    trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  ),
+                ),
+                Card(
+                  margin: const EdgeInsets.all(8.0),
+                  child: const ListTile(
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    subtitle: Text('2/10'),
+                    trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  ),
+                ),
+                Card(
+                  margin: const EdgeInsets.all(8.0),
+                  child: const ListTile(
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    subtitle: Text('2/10'),
+                    trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  ),
+                ),
+                // Puedes continuar agregando más `Card` widgets según sea necesario
               ],
             ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: Text('Logros'),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text('Recompensas'),
-                ),
-              ],
-            ),
-            // Aquí continuarías con el resto de la interfaz de la pantalla de perfil...
-          ],
-        ),
+          ),
+        ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar:  BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
