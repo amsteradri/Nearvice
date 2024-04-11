@@ -72,11 +72,14 @@ class _NearviceAppState extends State<NearviceApp> {
             ),
           ),
           actions: [
-            IconButton(
-              icon: Icon(Icons.add, color: Colors.grey), // Icono de agregar
-              onPressed: () {
-                // Acción al hacer clic en el icono de agregar
-              },
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0), // Ajustar el espacio desde la derecha
+              child: IconButton(
+                icon: Icon(Icons.filter_alt_outlined, color: Colors.grey), // Icono de filtros
+                onPressed: () {
+                  // Acción al hacer clic en el icono de filtros
+                },
+              ),
             ),
           ],
           iconTheme: IconThemeData(size: 28), // Tamaño del icono de menú
@@ -88,6 +91,8 @@ class _NearviceAppState extends State<NearviceApp> {
     );
   }
 }
+
+
 
 
 

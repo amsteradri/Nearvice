@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'profile_page.dart';
+import 'home.dart';
 
 
 Color brokenWhite = Color(0xFFFFFEEE); // Esto representa un blanco con un toque de gris
