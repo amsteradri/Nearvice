@@ -10,8 +10,22 @@ class NearviceApp extends StatefulWidget {
 }
 
 class _NearviceAppState extends State<NearviceApp> {
-  TextEditingController _searchController = TextEditingController(); // Controlador de texto
+  int _selectedIndex = 0;
 
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text('Inicio'), // Puedes reemplazar este Text widget con tu propia página de inicio
+    Text('Mapa'), // Puedes reemplazar este Text widget con tu propia página de mapa
+    Text('Actividad'), // Puedes reemplazar este Text widget con tu propia página de actividad
+    Text('Perfil'), // Puedes reemplazar este Text widget con tu propia página de perfil
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  TextEditingController _searchController = TextEditingController(); // Controlador de texto
   bool _isSearchFocused = false; // Estado de foco de búsqueda
 
   @override
@@ -85,80 +99,12 @@ class _NearviceAppState extends State<NearviceApp> {
           iconTheme: IconThemeData(size: 28), // Tamaño del icono de menú
         ),
         body: Center(
-          child: Text('Contenido de la aplicación'), // Contenido de la aplicación
-        ),
-      ),
-    );
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-import 'package:flutter/material.dart';
-
-void main() {
-  runApp(NearviceApp());
-}
-
-class NearviceApp extends StatefulWidget {
-  @override
-  _NearviceAppState createState() => _NearviceAppState();
-}
-
-class _NearviceAppState extends State<NearviceApp> {
-  int _selectedIndex = 0;
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text('Inicio'), // Puedes reemplazar este Text widget con tu propia página de inicio
-    Text('Mapa'), // Puedes reemplazar este Text widget con tu propia página de mapa
-    Text('Actividad'), // Puedes reemplazar este Text widget con tu propia página de actividad
-    Text('Perfil'), // Puedes reemplazar este Text widget con tu propia página de perfil
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Inicio'),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                // Acción al hacer clic en el icono de búsqueda
-              },
-            ),
-          ],
-        ),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
+          child: _widgetOptions.elementAt(_selectedIndex), // Contenido de la aplicación
         ),
         bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Colors.black, // Color de fondo de la BottomNavigationBar
-          ),
+          width: MediaQuery.of(context).size.width,
           child: BottomNavigationBar(
+            backgroundColor: Colors.black, // Establecer el color de fondo del BottomNavigationBar
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -187,4 +133,3 @@ class _NearviceAppState extends State<NearviceApp> {
     );
   }
 }
-*/
