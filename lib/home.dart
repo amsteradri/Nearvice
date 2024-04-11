@@ -101,32 +101,40 @@ class _NearviceAppState extends State<NearviceApp> {
         body: Center(
           child: _widgetOptions.elementAt(_selectedIndex), // Contenido de la aplicación
         ),
-        bottomNavigationBar: Container(
-          width: MediaQuery.of(context).size.width,
-          child: BottomNavigationBar(
-            backgroundColor: Colors.black, // Establecer el color de fondo del BottomNavigationBar
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Inicio',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.map),
-                label: 'Mapa',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.notifications),
-                label: 'Actividad',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Perfil',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.black, // Color de ícono seleccionado
-            unselectedItemColor: Colors.black, // Color de ícono no seleccionado
-            onTap: _onItemTapped,
+        bottomNavigationBar: SizedBox(
+          height: 90, // Ajustar la altura del contenedor para el menú inferior
+          child: Container(
+            color: Colors.black, // Color de fondo de la barra de navegación
+            child: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home, color: Colors.white, size:35),
+                  label: 'Inicio',
+                  backgroundColor: Colors.black,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.map, color: Colors.white, size:35),
+                  label: 'Mapa',
+                  backgroundColor: Colors.black,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.notifications, color: Colors.white, size:35),
+                  label: 'Actividad',
+                  backgroundColor: Colors.black,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person, color: Colors.white, size:35),
+                  label: 'Perfil',
+                  backgroundColor: Colors.black,
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.black, // Color de ícono seleccionado
+              unselectedItemColor: Colors.white, // Color de ícono no seleccionado
+              selectedLabelStyle: TextStyle(color: Colors.white), // Estilo de texto seleccionado
+              unselectedLabelStyle: TextStyle(color: Colors.white), // Estilo de texto no seleccionado
+              onTap: _onItemTapped,
+            ),
           ),
         ),
       ),
