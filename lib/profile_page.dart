@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'custom_bottom_nav_bar.dart';
 
-class SegundaPantalla extends StatelessWidget {
+class SegundaPantalla extends StatefulWidget {
   const SegundaPantalla({Key? key}) : super(key: key);
+
+  @override
+  _SegundaPantallaState createState() => _SegundaPantallaState();
+}
+class _SegundaPantallaState extends State<SegundaPantalla> {
+  int _selectedIndex = 1; // Índice para controlar la pestaña seleccionada
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +22,12 @@ class SegundaPantalla extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MI PERFIL'),
+        title: Text(
+          'MI PERFIL',
+          style: TextStyle(
+            color: Colors.white, // Cambia el color aquí
+          ),
+        ),
         centerTitle: true,
         backgroundColor: Colors.black,
         actions: [
@@ -21,6 +39,7 @@ class SegundaPantalla extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: CustomBottomNavBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -190,27 +209,7 @@ class SegundaPantalla extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar:  BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Inicio',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Mapa',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Actividad',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Perfil',
-          ),
-        ],
-        // Configurar el estado seleccionado actual, etc.
-      ),
+
     );
   }
 }

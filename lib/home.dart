@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'custom_bottom_nav_bar.dart';
 
-void main() {
-  runApp(NearviceApp());
-}
-
-class NearviceApp extends StatefulWidget {
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
   @override
-  _NearviceAppState createState() => _NearviceAppState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _NearviceAppState extends State<NearviceApp> {
-  int _selectedIndex = 0;
+class _MainPageState extends State<MainPage> {
+  int _selectedIndex = 0;  // Índice inicial para la pestaña seleccionada
 
+  // Función para manejar el cambio de índice
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -87,6 +86,7 @@ class _NearviceAppState extends State<NearviceApp> {
           ],
           iconTheme: IconThemeData(size: 28),
         ),
+        bottomNavigationBar: CustomBottomNavBar(),
         body: ListView(
           children: [
             GestureDetector(
@@ -103,7 +103,7 @@ class _NearviceAppState extends State<NearviceApp> {
                   rating: 4.5,
                   distance: 5.2,
                   isOpen: true,
-                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
                 ),
               ),
             ),
@@ -121,7 +121,7 @@ class _NearviceAppState extends State<NearviceApp> {
                   rating: 4.5,
                   distance: 5.2,
                   isOpen: true,
-                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
                 ),
               ),
             ),
@@ -139,7 +139,7 @@ class _NearviceAppState extends State<NearviceApp> {
                   rating: 4.5,
                   distance: 5.2,
                   isOpen: true,
-                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
                 ),
               ),
             ),
@@ -157,7 +157,7 @@ class _NearviceAppState extends State<NearviceApp> {
                   rating: 4.5,
                   distance: 5.2,
                   isOpen: true,
-                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
                 ),
               ),
             ),
@@ -175,7 +175,7 @@ class _NearviceAppState extends State<NearviceApp> {
                   rating: 4.5,
                   distance: 5.2,
                   isOpen: true,
-                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
                 ),
               ),
             ),
@@ -193,51 +193,15 @@ class _NearviceAppState extends State<NearviceApp> {
                   rating: 4.5,
                   distance: 5.2,
                   isOpen: true,
-                  profileImage: AssetImage('assets/profile_image.png'), // Cambiar por la imagen de perfil real
+                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
                 ),
               ),
             ),
-
           ],
         ),
-        bottomNavigationBar: SizedBox(
-          height: 90,
-          child: Container(
-            color: Colors.black,
-            child: BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home, color: Colors.white, size: 35),
-                  label: 'Inicio',
-                  backgroundColor: Colors.black,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.map, color: Colors.white, size: 35),
-                  label: 'Mapa',
-                  backgroundColor: Colors.black,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.notifications, color: Colors.white, size: 35),
-                  label: 'Actividad',
-                  backgroundColor: Colors.black,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person, color: Colors.white, size: 35),
-                  label: 'Perfil',
-                  backgroundColor: Colors.black,
-                ),
-              ],
-              currentIndex: _selectedIndex,
-              selectedItemColor: Colors.black,
-              unselectedItemColor: Colors.white,
-              selectedLabelStyle: TextStyle(color: Colors.white),
-              unselectedLabelStyle: TextStyle(color: Colors.white),
-              onTap: _onItemTapped,
-            ),
-          ),
         ),
-      ),
     );
+
   }
 }
 

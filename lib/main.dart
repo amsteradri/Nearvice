@@ -5,7 +5,7 @@ import 'profile_page.dart';
 import 'home.dart';
 
 
-Color brokenWhite = Color(0xFFFFFEEE); // Esto representa un blanco con un toque de gris
+const brokenWhite = Color(0xFFFFFEEE); // Esto representa un blanco con un toque de gris
 
 void main() {
   runApp(const NearviceApp());
@@ -112,7 +112,7 @@ class LoginPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const SegundaPantalla()),
+                            MaterialPageRoute(builder: (context) => const MainPage()),
                           );
                         },
                         style: ButtonStyle(
