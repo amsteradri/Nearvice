@@ -79,13 +79,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           ListTile(
-            leading: Icon(Icons.location_on, color: Colors.black),
-            title: Text('Gestionar Ubicaciones', style: TextStyle(color: Colors.black)),
+            leading: Icon(Icons.lock, color: Colors.black),
+            title: Text('Privacidad', style: TextStyle(color: Colors.black)),
+            subtitle: Text('Administra datos privados de tu perfil', style: TextStyle(color: Colors.grey)),
             trailing: Icon(Icons.chevron_right, color: Colors.black),
             onTap: () {
-              // Acción al tocar 'Gestionar Ubicaciones'
+              // Acción al tocar 'Privacidad'
             },
           ),
+          ListTile(
+            leading: Icon(Icons.sunny, color: Colors.black),
+            title: Text('Aspecto', style: TextStyle(color: Colors.black)),
+            subtitle: Text('Modo claro o oscuro', style: TextStyle(color: Colors.grey)),
+            trailing: Icon(Icons.chevron_right, color: Colors.black),
+            onTap: () {
+              // Acción al tocar 'Aspecto'
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.payment, color: Colors.black),
+            title: Text('Métodos de pago', style: TextStyle(color: Colors.black)),
+            subtitle: Text('Gestiona la información del método de pago', style: TextStyle(color: Colors.grey)),
+            trailing: Icon(Icons.chevron_right, color: Colors.black),
+            onTap: () {
+              // Acción al tocar 'Métodos de pago'
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.chat, color: Colors
+                .black),
+            title: Text('Configuración de chat', style: TextStyle(color: Colors.black)),
+            subtitle: Text('Personaliza el chat y configúralo', style: TextStyle(color: Colors.grey)),
+            trailing: Icon(Icons.chevron_right, color: Colors.black),
+            onTap: () {
+// Acción al tocar 'Configuración de chat'
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.person_add, color: Colors.black),
+            title: Text('Gestionar Perfiles', style: TextStyle(color: Colors.black)),
+            subtitle: Text('Configura tus perfiles de empresa y consumidor', style: TextStyle(color: Colors.grey)), // Subtítulo o descripción
+            trailing: Icon(Icons.chevron_right, color: Colors.black),
+            onTap: () {
+              // Acción al tocar 'Gestionar Perfiles'
+            },
+          ),
+
+
           // ... Más ListTiles para cada opción de ajustes
         ],
       ),
