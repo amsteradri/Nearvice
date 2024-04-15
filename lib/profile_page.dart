@@ -87,7 +87,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           const Text(
             'Nivel 1',
             style: TextStyle(
@@ -96,10 +96,12 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
               color: Colors.blue,
             ),
           ),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildStatCard('Valoraciones', '30.000', Icons.star, context),
+              const SizedBox(height: 15),
               _buildStatCard('Servicios perfectos', '300', Icons.check_circle, context),
             ],
           ),
