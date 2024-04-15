@@ -31,23 +31,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text("Adri Vaquis Gordis", style:  const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+            accountName: Text(
+              "adri Vaquis Gordis",
+              style: TextStyle(
+                fontSize: 20, // Ajusta el tamaño de la fuente si es necesario
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
-            ),
-            accountEmail: Text("Adrivaquis.gordis@gmail.com", style:  const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+            accountEmail: Text(
+              "620 60 74 87\nAdrivaquis.gordis@gmail.com",
+              style: TextStyle(
+                fontSize: 14, // Ajusta el tamaño de la fuente si es necesario
+                color: Colors.grey[850], // Para un color de texto gris oscuro
+              ),
             ),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/profile_pic.jpg'),
+              backgroundColor: Colors.white, // Fondo blanco para el círculo
+              radius: 40, // Ajusta el radio si es necesario
+              child: ClipOval(
+                child: Image.asset('assets/images/profile_pic.jpg'), // Asegúrate de que la imagen exista en el directorio correcto
+              ),
             ),
-            decoration: BoxDecoration(color: Colors.white),
+            decoration: BoxDecoration(
+              color: Colors.white, // Fondo blanco del encabezado
+            ),
+            otherAccountsPictures: [
+              IconButton(
+                icon: Icon(Icons.chevron_right, color: Colors.grey),
+                onPressed: () {
+                  // Acción cuando se presiona el icono de flecha
+                },
+              ),
+            ],
           ),
+
+
+
+
           ExpansionTile(
             leading: Icon(Icons.home, color: Colors.black),
             title: const Text('Getionar ubicaciones', style: TextStyle(color: Colors.black)),
