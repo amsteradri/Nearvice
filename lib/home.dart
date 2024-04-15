@@ -10,7 +10,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;  // Índice inicial para la pestaña seleccionada
 
-  // Función para manejar el cambio de índice
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -28,19 +27,19 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double toolbarHeight = screenHeight * 0.1; // Ajusta a 10% de la altura de la pantalla
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
           elevation: 0,
           titleSpacing: 0,
-          toolbarHeight: 85,
+          toolbarHeight: MediaQuery.of(context).size.height * 0.08,
           title: GestureDetector(
-            onTap: () {
-              setState(() {
-                _isSearchFocused = true;
-              });
-            },
+            onTap: () => setState(() => _isSearchFocused = true),
             child: Container(
               margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               decoration: BoxDecoration(
@@ -49,7 +48,6 @@ class _MainPageState extends State<MainPage> {
               ),
               child: Row(
                 children: [
-                  SizedBox(width: 10),
                   Icon(Icons.search, color: Colors.grey),
                   Expanded(
                     child: TextField(
@@ -58,9 +56,7 @@ class _MainPageState extends State<MainPage> {
                         hintText: 'Buscar...',
                         border: InputBorder.none,
                       ),
-                      onChanged: (text) {
-                        setState(() {});
-                      },
+                      onChanged: (text) => setState(() {}),
                     ),
                   ),
                   if (_searchController.text.isNotEmpty)
@@ -76,132 +72,29 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: IconButton(
-                icon: Icon(Icons.filter_alt_outlined, color: Colors.grey),
-                onPressed: () {},
-              ),
+            IconButton(
+              icon: Icon(Icons.filter_alt_outlined, color: Colors.grey),
+              onPressed: () {},
             ),
           ],
           iconTheme: IconThemeData(size: 28),
         ),
         bottomNavigationBar: CustomBottomNavBar(),
-        body: ListView(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
-                );
-              },
-              child: ServiceCard(
-                service: Service(
-                  providerName: 'Nombre del proveedor',
-                  serviceName: 'Fontanero',
-                  rating: 4.5,
-                  distance: 5.2,
-                  isOpen: true,
-                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
-                ),
-              ),
+        body: ListView.builder(
+          itemCount: 6,
+          itemBuilder: (context, index) => ServiceCard(
+            service: Service(
+              providerName: 'Nombre del proveedor $index',
+              serviceName: 'Servicio $index',
+              rating: 4.5,
+              distance: 5.2,
+              isOpen: true,
+              profileImage: AssetImage('assets/images/profile_pic.jpg'),
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
-                );
-              },
-              child: ServiceCard(
-                service: Service(
-                  providerName: 'Nombre del proveedor',
-                  serviceName: 'Electricista',
-                  rating: 4.5,
-                  distance: 5.2,
-                  isOpen: true,
-                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
-                );
-              },
-              child: ServiceCard(
-                service: Service(
-                  providerName: 'Nombre del proveedor',
-                  serviceName: 'Carpintero',
-                  rating: 4.5,
-                  distance: 5.2,
-                  isOpen: true,
-                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
-                );
-              },
-              child: ServiceCard(
-                service: Service(
-                  providerName: 'Nombre del proveedor',
-                  serviceName: 'Niñera',
-                  rating: 4.5,
-                  distance: 5.2,
-                  isOpen: true,
-                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
-                );
-              },
-              child: ServiceCard(
-                service: Service(
-                  providerName: 'Nombre del proveedor',
-                  serviceName: 'Cocinero',
-                  rating: 4.5,
-                  distance: 5.2,
-                  isOpen: true,
-                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ServiceDetailsPage()),
-                );
-              },
-              child: ServiceCard(
-                service: Service(
-                  providerName: 'Nombre del proveedor',
-                  serviceName: 'Mecanico',
-                  rating: 4.5,
-                  distance: 5.2,
-                  isOpen: true,
-                  profileImage: AssetImage('assets/images/profile_pic.jpg'), // Cambiar por la imagen de perfil real
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-        ),
+      ),
     );
-
   }
 }
 
@@ -230,31 +123,30 @@ class ServiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(16),
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  backgroundImage: service.profileImage,
-                  radius: 30,
-                ),
-                SizedBox(width: 16),
-                Column(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ServiceDetailsPage(service: service)),
+        );
+      },
+      child: Card(
+        margin: EdgeInsets.all(16),
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundImage: service.profileImage,
+                radius: 30,
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      service.providerName,
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      service.serviceName, // Mostrar el nombre del servicio
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+                    Text(service.providerName, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text(service.serviceName, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                     Row(
                       children: [
                         Icon(Icons.star, color: Colors.yellow),
@@ -263,21 +155,43 @@ class ServiceCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Expanded(child: Container()),
-                Text(
-                  '${service.distance} km',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(width: 8),
-                Text(
-                  service.isOpen ? 'Abierto' : 'Cerrado',
-                  style: TextStyle(
-                    color: service.isOpen ? Colors.green : Colors.red,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
+              ),
+              Text('${service.distance} km', style: TextStyle(fontWeight: FontWeight.bold)),
+              SizedBox(width: 8),
+              Text(service.isOpen ? 'Abierto' : 'Cerrado', style: TextStyle(color: service.isOpen ? Colors.green : Colors.red, fontWeight: FontWeight.bold)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class ServiceDetailsPage extends StatelessWidget {
+  final Service service;
+
+  const ServiceDetailsPage({Key? key, required this.service}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.08,
+        title: const Text('Detalles del Servicio', style: TextStyle(color: Colors.white)),
+        iconTheme: IconThemeData(color: Colors.white), // Color de la flecha de retroceso
+        centerTitle: true,
+        backgroundColor: Colors.black,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Proveedor: ${service.providerName}'),
+            Text('Servicio: ${service.serviceName}'),
+            Text('Calificación: ${service.rating}'),
+            Text('Distancia: ${service.distance} km'),
+            Text('Estado: ${service.isOpen ? "Abierto" : "Cerrado"}'),
           ],
         ),
       ),
@@ -285,16 +199,3 @@ class ServiceCard extends StatelessWidget {
   }
 }
 
-class ServiceDetailsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Detalles del Servicio'),
-      ),
-      body: Center(
-        child: Text('Página de detalles del servicio'),
-      ),
-    );
-  }
-}

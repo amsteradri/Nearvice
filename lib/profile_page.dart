@@ -23,6 +23,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: MediaQuery.of(context).size.height * 0.08,
         title: const Text(
           'MI PERFIL',
           style: TextStyle(
@@ -49,7 +50,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Text(
             'Michael Jackson',
             style: const TextStyle(
@@ -57,7 +58,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Text(
             '${(progressPercent * 100).toInt()}%',
             style: const TextStyle(
@@ -86,7 +87,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           const Text(
             'Nivel 1',
             style: TextStyle(
@@ -95,42 +96,13 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
               color: Colors.blue,
             ),
           ),
-          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Column(
-                children: [
-                  Text(
-                    'Valoraciones 30.000',
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min, // Esto asegura que la fila solo sea tan ancha como sus hijos
-                    children: List.generate(5, (index) {
-                      return Icon(
-                        Icons.star,
-                        color: Colors.amber, // Color amarillo para las estrellas, típicamente usado para valoraciones
-                        size: 16, // Tamaño de las estrellas
-                      );
-                    }),
-                  ),
-                  // Continúa con más widgets si es necesario
-                ],
-              ),
-              SizedBox(width: 30),
-              Column(
-                children: [
-                  Text(
-                    'Servicios \nperfectos: 300',
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
+              _buildStatCard('Valoraciones', '30.000', Icons.star, context),
+              _buildStatCard('Servicios perfectos', '300', Icons.check_circle, context),
             ],
           ),
-          const SizedBox(height: 30),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Row(
@@ -139,7 +111,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
                 Expanded(
                   child: Text(
                     'Logros',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -147,7 +119,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
                 Expanded(
                   child: Text(
                     'Recompensas',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -163,7 +135,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
                 Card(
                   margin: const EdgeInsets.all(8.0),
                   child: const ListTile(
-                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                     subtitle: Text('2/10'),
                     trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                   ),
@@ -172,7 +144,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
                   color: Colors.green[300], // Resalta el logro alcanzado
                   margin: const EdgeInsets.all(8.0),
                   child: const ListTile(
-                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                     subtitle: Text('10/10'),
                     trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                   ),
@@ -180,7 +152,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
                 Card(
                   margin: const EdgeInsets.all(8.0),
                   child: const ListTile(
-                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                     subtitle: Text('2/10'),
                     trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                   ),
@@ -188,7 +160,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
                 Card(
                   margin: const EdgeInsets.all(8.0),
                   child: const ListTile(
-                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                     subtitle: Text('2/10'),
                     trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                   ),
@@ -196,7 +168,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
                 Card(
                   margin: const EdgeInsets.all(8.0),
                   child: const ListTile(
-                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                     subtitle: Text('2/10'),
                     trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                   ),
@@ -204,7 +176,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
                 Card(
                   margin: const EdgeInsets.all(8.0),
                   child: const ListTile(
-                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                    title: Text('Contratar 10 servicios', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                     subtitle: Text('2/10'),
                     trailing: Text('30 % de descuento \nen el próximo servicio', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                   ),
@@ -218,4 +190,21 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
 
     );
   }
+}
+
+
+Widget _buildStatCard(String title, String count, IconData icon, BuildContext context) {
+  return Card(
+    child: Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Icon(icon, color: Colors.amber),
+          SizedBox(height: 8),
+          Text(title, style: TextStyle(fontSize: 16)),
+          Text(count, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        ],
+      ),
+    ),
+  );
 }
