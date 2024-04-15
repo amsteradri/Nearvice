@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'home.dart'; // Assume you have a page called MainPage
 import 'profile_page.dart'; // Assume you have a page called SecondPage
+import 'map.dart';
+import 'activity.dart';
 
 Route createFadeRoute({required Widget page, required BuildContext context, Duration duration = const Duration(milliseconds: 50)}) {
   return PageRouteBuilder(
@@ -61,10 +63,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             nextPage = MainPage(); // Assumes MainPage is 'Inicio'
             break;
           case 1:
-            nextPage = SegundaPantalla(); // Assumes SecondPage is 'Mapa'
+            nextPage = NearviceApp(); // Assumes SecondPage is 'Mapa'
             break;
           case 2:
-            nextPage = MainPage(); // Placeholder, update as needed
+            nextPage = ActivityPage(); // Placeholder, update as needed
             break;
           case 3:
             nextPage = SegundaPantalla(); // Assumes SecondPage is 'Perfil'

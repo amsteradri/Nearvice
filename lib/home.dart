@@ -48,21 +48,26 @@ class _MainPageState extends State<MainPage> {
               ),
               child: Row(
                 children: [
-                  Icon(Icons.search, color: Colors.grey),
+                  SizedBox(width: 10),
+                  Icon(Icons.search, color: Colors.grey), // Icono de búsqueda
                   Expanded(
                     child: TextField(
-                      controller: _searchController,
+                      controller: _searchController, // Asignar controlador de texto al TextField
                       decoration: InputDecoration(
-                        hintText: 'Buscar...',
-                        border: InputBorder.none,
+                        hintText: 'Buscar...', // Texto de sugerencia
+                        border: InputBorder.none, // Sin borde alrededor del TextField
                       ),
-                      onChanged: (text) => setState(() {}),
+                      onChanged: (text) {
+                        // Si el texto está cambiando, mostrar u ocultar el icono de limpiar
+                        setState(() {});
+                      },
                     ),
                   ),
-                  if (_searchController.text.isNotEmpty)
+                  if (_searchController.text.isNotEmpty) // Mostrar el icono de limpiar solo si hay texto en el TextField
                     IconButton(
-                      icon: Icon(Icons.clear, color: Colors.grey),
+                      icon: Icon(Icons.clear, color: Colors.grey), // Icono de limpiar
                       onPressed: () {
+                        // Limpiar el texto del TextField
                         _searchController.clear();
                         setState(() {});
                       },
@@ -72,9 +77,14 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           actions: [
-            IconButton(
-              icon: Icon(Icons.filter_alt_outlined, color: Colors.grey),
-              onPressed: () {},
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0), // Ajustar el espacio desde la derecha
+              child: IconButton(
+                icon: Icon(Icons.filter_alt_outlined, color: Colors.grey), // Icono de filtros
+                onPressed: () {
+                  // Acción al hacer clic en el icono de filtros
+                },
+              ),
             ),
           ],
           iconTheme: IconThemeData(size: 28),

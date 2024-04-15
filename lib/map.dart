@@ -34,6 +34,10 @@ class _NearviceAppState extends State<NearviceApp> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double toolbarHeight = screenHeight * 0.1; // Ajusta a 10% de la altura de la pantalla
+
     return MaterialApp(
       home: Scaffold(
         bottomNavigationBar: CustomBottomNavBar(),
@@ -41,7 +45,7 @@ class _NearviceAppState extends State<NearviceApp> {
           backgroundColor: Colors.black, // Color de fondo del AppBar (ahora es negro)
           elevation: 0, // Eliminar sombra del AppBar
           titleSpacing: 0, // Espacio alrededor del título del AppBar
-          toolbarHeight: 85, // Ajustar la altura del AppBar
+          toolbarHeight: MediaQuery.of(context).size.height * 0.08,
           title: GestureDetector(
             onTap: () {
               setState(() {
