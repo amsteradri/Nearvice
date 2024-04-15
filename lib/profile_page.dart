@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'custom_bottom_nav_bar.dart';
+import 'settings.dart';
 
 class SegundaPantalla extends StatefulWidget {
   const SegundaPantalla({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'MI PERFIL',
           style: TextStyle(
             color: Colors.white, // Cambia el color aquí
@@ -34,7 +35,12 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              // Acción de configuración
+
+              // O si estás utilizando un enfoque más directo sin rutas nombradas:
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
             },
           ),
         ],
