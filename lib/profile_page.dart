@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'custom_bottom_nav_bar.dart';
 import 'settings.dart';
+import 'ServiceHistoryScreen.dart';
+import 'RatingHistoryScreen.dart';
 
 class SegundaPantalla extends StatefulWidget {
   const SegundaPantalla({Key? key}) : super(key: key);
@@ -32,9 +34,11 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
         ),
         centerTitle: true,
         backgroundColor: Colors.black,
+        iconTheme: IconThemeData(color: Colors.white),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
+
             onPressed: () {
 
               // O si estás utilizando un enfoque más directo sin rutas nombradas:
@@ -100,11 +104,24 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _buildStatCard('Valoraciones', '30.000', Icons.star, context),
+              _buildStatCard(
+                'Valoraciones',
+                '30.000',
+                Icons.star,
+                context,
+                    () => Navigator.push(context, MaterialPageRoute(builder: (context) => RatingHistoryScreen())),
+              ),
               const SizedBox(height: 15),
-              _buildStatCard('Servicios perfectos', '300', Icons.check_circle, context),
+              _buildStatCard(
+                'Servicios perfectos',
+                '300',
+                Icons.check_circle,
+                context,
+                    () => Navigator.push(context, MaterialPageRoute(builder: (context) => ServiceHistoryScreen())),
+              ),
             ],
           ),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Row(
@@ -195,17 +212,20 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
 }
 
 
-Widget _buildStatCard(String title, String count, IconData icon, BuildContext context) {
-  return Card(
-    child: Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Icon(icon, color: Colors.amber),
-          SizedBox(height: 8),
-          Text(title, style: TextStyle(fontSize: 16)),
-          Text(count, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        ],
+Widget _buildStatCard(String title, String count, IconData icon, BuildContext context, VoidCallback onTap) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Card(
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Icon(icon, color: Colors.amber),
+            SizedBox(height: 8),
+            Text(title, style: TextStyle(fontSize: 16)),
+            Text(count, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          ],
+        ),
       ),
     ),
   );
