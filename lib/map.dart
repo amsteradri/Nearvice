@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'custom_bottom_nav_bar.dart';
 
-void main() => runApp(NearviceApp());
-
-class NearviceApp extends StatefulWidget {
+class MapScreen extends StatefulWidget {
   @override
-  _NearviceAppState createState() => _NearviceAppState();
+  _MapScreenState createState() => _MapScreenState();
 }
 
-class _NearviceAppState extends State<NearviceApp> {
+class _MapScreenState extends State<MapScreen> {
   int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
@@ -40,7 +40,7 @@ class _NearviceAppState extends State<NearviceApp> {
 
     return MaterialApp(
       home: Scaffold(
-        bottomNavigationBar: CustomBottomNavBar(),
+
         appBar: AppBar(
           backgroundColor: Colors.black, // Color de fondo del AppBar (ahora es negro)
           elevation: 0, // Eliminar sombra del AppBar
@@ -101,8 +101,22 @@ class _NearviceAppState extends State<NearviceApp> {
           ],
           iconTheme: IconThemeData(size: 28), // Tamaño del icono de menú
         ),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex), // Contenido de la aplicación
+        bottomNavigationBar: CustomBottomNavBar(),
+        body: Stack(
+          children: [
+            FlutterMap(
+              options: MapOptions(
+                center: LatLng(51.509364, -0.128928),
+                zoom: 3.2,
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'com.example.app',
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

@@ -63,7 +63,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             nextPage = MainPage(); // Assumes MainPage is 'Inicio'
             break;
           case 1:
-            nextPage = NearviceApp(); // Assumes SecondPage is 'Mapa'
+            nextPage = MapScreen(); // Assumes SecondPage is 'Mapa'
             break;
           case 2:
             nextPage = ActivityPage(); // Placeholder, update as needed

@@ -81,6 +81,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ExpansionTile(
             leading: Icon(Icons.home, color: Colors.black),
             title: const Text('Getionar ubicaciones', style: TextStyle(color: Colors.black)),
+            subtitle: Text('Administra las diferentes ubicaciones\nasocidadas a tu perfil', style: TextStyle(color: Colors.grey)),
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),

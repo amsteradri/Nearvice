@@ -32,6 +32,9 @@ dependencies:
     sdk: flutter
   font_awesome_flutter: ^9.1.0 # Asegúrate de estar utilizando la última versión compatible.
   flutter_svg: ^0.22.0
+  flutter_map: ^3.1.0
+  latlong2: ^0.8.0
+
 
 
 
