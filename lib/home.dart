@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'custom_bottom_nav_bar.dart';
+import 'ServiceDetailsPage.dart';
+
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -24,16 +26,16 @@ class _MainPageState extends State<MainPage> {
     _searchController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-    double toolbarHeight = screenHeight * 0.1; // Ajusta a 10% de la altura de la pantalla
-
+    // Envuelve el Scaffold con MaterialApp y configura los temas aquí si es necesario
     return MaterialApp(
+      theme: ThemeData.light(), // Asegúrate de usar ThemeData.light() para el tema en claro
       home: Scaffold(
+        backgroundColor: Colors.white,
+        bottomNavigationBar: CustomBottomNavBar(),
         appBar: AppBar(
+          clipBehavior: Clip.antiAlias,
           backgroundColor: Colors.black,
           elevation: 0,
           titleSpacing: 0,
@@ -52,22 +54,20 @@ class _MainPageState extends State<MainPage> {
                   Icon(Icons.search, color: Colors.grey), // Icono de búsqueda
                   Expanded(
                     child: TextField(
-                      controller: _searchController, // Asignar controlador de texto al TextField
+                      controller: _searchController,
                       decoration: InputDecoration(
-                        hintText: 'Buscar...', // Texto de sugerencia
-                        border: InputBorder.none, // Sin borde alrededor del TextField
+                        hintText: 'Buscar...',
+                        border: InputBorder.none,
                       ),
                       onChanged: (text) {
-                        // Si el texto está cambiando, mostrar u ocultar el icono de limpiar
                         setState(() {});
                       },
                     ),
                   ),
-                  if (_searchController.text.isNotEmpty) // Mostrar el icono de limpiar solo si hay texto en el TextField
+                  if (_searchController.text.isNotEmpty)
                     IconButton(
-                      icon: Icon(Icons.clear, color: Colors.grey), // Icono de limpiar
+                      icon: Icon(Icons.clear, color: Colors.grey),
                       onPressed: () {
-                        // Limpiar el texto del TextField
                         _searchController.clear();
                         setState(() {});
                       },
@@ -78,9 +78,9 @@ class _MainPageState extends State<MainPage> {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 8.0), // Ajustar el espacio desde la derecha
+              padding: const EdgeInsets.only(right: 8.0),
               child: IconButton(
-                icon: Icon(Icons.filter_alt_outlined, color: Colors.grey), // Icono de filtros
+                icon: Icon(Icons.filter_alt_outlined, color: Colors.grey),
                 onPressed: () {
                   // Acción al hacer clic en el icono de filtros
                 },
@@ -89,86 +89,99 @@ class _MainPageState extends State<MainPage> {
           ],
           iconTheme: IconThemeData(size: 28),
         ),
-        bottomNavigationBar: CustomBottomNavBar(),
-        body: ListView.builder(
+
+        body: ListView.separated(
           itemCount: 6,
-          itemBuilder: (context, index) => ServiceCard(
-            service: Service(
-              providerName: 'Nombre del proveedor $index',
-              serviceName: 'Servicio $index',
-              rating: 4.5,
-              distance: 5.2,
-              isOpen: true,
-              profileImage: AssetImage('assets/images/profile_pic.jpg'),
-            ),
-          ),
+          separatorBuilder: (context, index) => const SizedBox(height: 10),
+          itemBuilder: (context, index) {
+            return ServiceCard(
+              service: Service(
+                providerName: 'Manolo Cerrajero',
+                serviceName: 'Disponible · Precio medio 70€ · 35-45min',
+                assetName: 'assets/images/cerrajero.png',
+                address: '123 Example St, City $index',
+                phoneNumber: '123-456-7890',
+                isFavorited: index % 2 == 0,
+              ),
+            );
+          },
         ),
+
       ),
     );
   }
 }
 
 class Service {
-  String providerName;
-  String serviceName;
-  double rating;
-  double distance;
-  bool isOpen;
-  AssetImage profileImage;
+  final String providerName;
+  final String serviceName;
+  final String assetName;
+  final String address;
+  final String phoneNumber;
+  final bool isFavorited;
 
   Service({
     required this.providerName,
     required this.serviceName,
-    required this.rating,
-    required this.distance,
-    required this.isOpen,
-    required this.profileImage,
+    required this.assetName,
+    required this.address,
+    required this.phoneNumber,
+    required this.isFavorited,
   });
 }
+
+
 
 class ServiceCard extends StatelessWidget {
   final Service service;
 
-  ServiceCard({required this.service});
+  const ServiceCard({Key? key, required this.service}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ServiceDetailsPage(service: service)),
+          MaterialPageRoute(
+            builder: (context) => ServiceDetailsPage(service: service),
+          ),
         );
       },
       child: Card(
-        margin: EdgeInsets.all(16),
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Row(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
+          child: Column(
             children: [
-              CircleAvatar(
-                backgroundImage: service.profileImage,
-                radius: 30,
+              Image.asset(
+                service.assetName,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 150,
               ),
-              SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(service.providerName, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                    Text(service.serviceName, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                    Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.yellow),
-                        Text(service.rating.toString()),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(service.providerName, style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(service.serviceName),
+                        ],
+                      ),
                     ),
+                    if (service.isFavorited)
+                      Icon(Icons.favorite, color: Colors.red),
                   ],
                 ),
               ),
-              Text('${service.distance} km', style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(width: 8),
-              Text(service.isOpen ? 'Abierto' : 'Cerrado', style: TextStyle(color: service.isOpen ? Colors.green : Colors.red, fontWeight: FontWeight.bold)),
             ],
           ),
         ),
@@ -178,34 +191,7 @@ class ServiceCard extends StatelessWidget {
 }
 
 
-class ServiceDetailsPage extends StatelessWidget {
-  final Service service;
 
-  const ServiceDetailsPage({Key? key, required this.service}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.08,
-        title: const Text('Detalles del Servicio', style: TextStyle(color: Colors.white)),
-        iconTheme: IconThemeData(color: Colors.white), // Color de la flecha de retroceso
-        centerTitle: true,
-        backgroundColor: Colors.black,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Proveedor: ${service.providerName}'),
-            Text('Servicio: ${service.serviceName}'),
-            Text('Calificación: ${service.rating}'),
-            Text('Distancia: ${service.distance} km'),
-            Text('Estado: ${service.isOpen ? "Abierto" : "Cerrado"}'),
-          ],
-        ),
-      ),
-    );
-  }
-}
+
 

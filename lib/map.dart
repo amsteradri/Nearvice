@@ -106,8 +106,8 @@ class _MapScreenState extends State<MapScreen> {
           children: [
             FlutterMap(
               options: MapOptions(
-                center: LatLng(51.509364, -0.128928),
-                zoom: 3.2,
+                center: LatLng(41.497638, 1.840593),
+                zoom: 16,
               ),
               children: [
                 TileLayer(
