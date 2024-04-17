@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'custom_bottom_nav_bar.dart';
+import 'chat.dart';
 
 class ChatItem {
   final String profileImage;
@@ -121,37 +122,45 @@ class _ActivityPageState extends State<ActivityPage> {
               itemCount: chats.length,
               itemBuilder: (context, index) {
                 final chat = chats[index];
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: AssetImage(chat.profileImage),
+                return GestureDetector(
+                  onTap: () {
+                    // Aquí maneja la acción al hacer clic en el chat item
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatScreen(chat: chat),
                       ),
-                      title: Text(
-                        chat.name,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: AssetImage(chat.profileImage),
                         ),
-                      ),
-                      subtitle: Text(chat.lastMessage),
-                      trailing: chat.unreadMessages > 0
-                          ? CircleAvatar(
-                        radius: 12,
-                        backgroundColor: Colors.red,
-                        child: Text(
-                          '${chat.unreadMessages}',
+                        title: Text(
+                          chat.name,
                           style: TextStyle(
-                            color: Colors.white,
                             fontWeight: FontWeight.bold,
+                            fontSize: 18,
                           ),
                         ),
-                      )
-                          : null,
-                      onTap: () {
-                        // Aquí puedes manejar la interacción con el chat
-                      },
+                        subtitle: Text(chat.lastMessage),
+                        trailing: chat.unreadMessages > 0
+                            ? CircleAvatar(
+                          radius: 12,
+                          backgroundColor: Colors.red,
+                          child: Text(
+                            '${chat.unreadMessages}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                            : null,
+                      ),
                     ),
                   ),
                 );
@@ -224,10 +233,4 @@ class _ActivityPageState extends State<ActivityPage> {
       );
     }
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: ActivityPage(),
-  ));
 }
