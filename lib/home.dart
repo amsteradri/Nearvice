@@ -39,10 +39,150 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    _selectedFilters = _filterEmojis.keys.fold({}, (Map<String, bool> map, String key) {
-      map[key] = false;
-      return map;
-    });
+    services = [
+      Service(
+        providerName: 'Manolo Cerrajero',
+        serviceName: 'Cerrajería urgente',
+        assetName: 'assets/images/cerrajero.png',
+        address: 'Calle Falsa 123',
+        phoneNumber: '123-456-7890',
+        isFavorited: true,
+        category: ['Cerrajero'], // Categoría asociada con este servicio.
+      ),
+      Service(
+        providerName: 'Pedro Chef',
+        serviceName: 'Chef de primera',
+        assetName: 'assets/images/chef.png',
+        address: 'Calle Falsa 123',
+        phoneNumber: '123-456-7890',
+        isFavorited: true,
+        category: ['Chef'], // Categoría asociada con este servicio.
+      ),
+      Service(
+        providerName: 'Laura Albañil',
+        serviceName: 'Albañileria premium',
+        assetName: 'assets/images/albañil.png',
+        address: 'Calle Falsa 123',
+        phoneNumber: '123-456-7890',
+        isFavorited: true,
+        category: ['Carpintero'], // Asumiendo que se trata de servicios de construcción.
+      ),
+      Service(
+        providerName: 'Sara Pastelera',
+        serviceName: 'Pastelería deliciosa',
+        assetName: 'assets/images/pastelera.png',
+        address: 'Calle Falsa 123',
+        phoneNumber: '123-456-7890',
+        isFavorited: true,
+        category: ['Chef'], // Aunque es pastelera, está bajo la categoría de chef para la cocina.
+      ),
+      Service(
+        providerName: 'Pablo Fontanero',
+        serviceName: 'Reparación de tuberías',
+        assetName: 'assets/images/fontanero.png',
+        address: 'Avenida Principal 456',
+        phoneNumber: '987-654-3210',
+        isFavorited: false,
+        category: ['Fontanero'],
+      ),
+      Service(
+        providerName: 'Elena Electricista',
+        serviceName: 'Instalaciones eléctricas',
+        assetName: 'assets/images/electricista.png',
+        address: 'Barrio del Pilar 789',
+        phoneNumber: '567-890-1234',
+        isFavorited: true,
+        category: ['Electricista'],
+      ),
+      Service(
+        providerName: 'Ana Niñera',
+        serviceName: 'Cuidado infantil profesional',
+        assetName: 'assets/images/ninera.png',
+        address: 'Urbanización Los Pinos 101',
+        phoneNumber: '234-567-8910',
+        isFavorited: false,
+        category: ['Niñera'],
+      ),
+      Service(
+        providerName: 'Chef Rodrigo',
+        serviceName: 'Servicios de catering gourmet',
+        assetName: 'assets/images/chef.png',
+        address: 'Residencial El Bosque 202',
+        phoneNumber: '345-678-9012',
+        isFavorited: true,
+        category: ['Chef'],
+      ),
+      Service(
+        providerName: 'Luis Peluquero',
+        serviceName: 'Cortes y estilismo',
+        assetName: 'assets/images/peluquero.png',
+        address: 'Plaza del Centro 303',
+        phoneNumber: '456-789-0123',
+        isFavorited: false,
+        category: ['Peluquero'],
+      ),
+      Service(
+        providerName: 'María Técnica de PC',
+        serviceName: 'Reparación y mantenimiento de PC',
+        assetName: 'assets/images/tecnico_pc.png',
+        address: 'Calle Nueva 404',
+        phoneNumber: '567-890-1234',
+        isFavorited: true,
+        category: ['Técnico de PC'],
+      ),
+      Service(
+        providerName: 'Jorge Agente Inmobiliario',
+        serviceName: 'Venta y alquiler de propiedades',
+        assetName: 'assets/images/agente_inmobiliario.png',
+        address: 'Bulevar Sunset 505',
+        phoneNumber: '678-901-2345',
+        isFavorited: false,
+        category: ['Agente Inmobiliario'],
+      ),
+      Service(
+        providerName: 'Carlos Chófer',
+        serviceName: 'Servicio de transporte personal',
+        assetName: 'assets/images/chofer.png',
+        address: 'Avenida Libertad 606',
+        phoneNumber: '789-012-3456',
+        isFavorited: true,
+        category: ['Chófer'],
+      ),
+      Service(
+        providerName: 'Tomás Carpintero',
+        serviceName: 'Carpintería y mueblería a medida',
+        assetName: 'assets/images/carpintero.png',
+        address: 'Calle de la Madera 707',
+        phoneNumber: '890-123-4567',
+        isFavorited: false,
+        category: ['Carpintero'],
+      ),
+      // Agrega más servicios aquí con sus categorías correspondientes.
+    ];
+    filteredServices = services;
+    _selectedFilters = {
+      'Cerrajero': false,
+      'Fontanero': false,
+      'Electricista': false,
+      'Niñera': false,
+      'Chef': false,
+      'Peluquero': false,
+      'Técnico de PC': false,
+      'Agente Inmobiliario': false,
+      'Chófer': false,
+      'Carpintero': false,
+      'Pintor': false,
+      'Jardinero': false,
+      'Fotógrafo': false,
+      'Cuidador de mascotas': false,
+      'Entrenador personal': false,
+      'Mecánico': false,
+      'Asesor financiero': false,
+      'Profesor particular': false,
+      'Organizador de eventos': false,
+      'Músico': false,
+      // Añade más categorías según tus necesidades.
+    };
   }
 
   @override
@@ -51,20 +191,56 @@ class _MainPageState extends State<MainPage> {
     super.dispose();
   }
 
+  void _filterServices() {
+    List<Service> tempServices = services.where((service) {
+      // Verificar si el texto de búsqueda coincide
+      bool matchesSearch = service.providerName.toLowerCase().contains(_searchController.text.toLowerCase());
+
+      // Verifica si todos los filtros están desactivados (ningún chip está seleccionado)
+      bool noFiltersSelected = !_selectedFilters.values.any((selected) => selected);
+
+      // Verificar si algún filtro seleccionado coincide con las categorías del servicio
+      bool matchesFilters = _selectedFilters.entries.any((entry) {
+        return entry.value && service.category.contains(entry.key);
+      });
+
+      // Si no hay filtros seleccionados, ignora la comprobación de filtros
+      return matchesSearch && (noFiltersSelected || matchesFilters);
+    }).toList();
+
+    // Actualizar la lista de servicios filtrados
+    setState(() {
+      filteredServices = tempServices;
+    });
+  }
+
+
   Widget _buildFilterChip(BuildContext context, String label) {
-    return ChoiceChip(
-      label: Text(label),
-      avatar: Text(_filterEmojis[label]!),
-      selected: _selectedFilters[label]!,
-      onSelected: (bool selected) {
-        setState(() {
-          _selectedFilters[label] = selected;
-        });
-      },
-      selectedColor: Colors.lightGreen[100],
-      showCheckmark: false,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: ChoiceChip(
+        label: Text(label, style: TextStyle(color: Colors.black)),
+        avatar: CircleAvatar(
+          backgroundColor: Colors.transparent,  // Fondo transparente para el avatar
+          child: Text(_filterEmojis[label]!),  // Usa el emoji del mapa _filterEmojis
+        ),
+        selected: _selectedFilters[label]!,
+        onSelected: (bool selected) {
+          setState(() {
+            _selectedFilters[label] = selected;
+            _filterServices();  // Asegúrate de llamar a _filterServices para actualizar la lista
+          });
+        },
+        selectedColor: Colors.lightGreen[100],
+        backgroundColor: Colors.grey[200],
+        showCheckmark: false,  // Elimina el checkmark para simplificar la UI
+        labelStyle: TextStyle(
+          color: _selectedFilters[label]! ? Colors.black : Colors.grey,
+        ),
+      ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -153,12 +329,11 @@ class _MainPageState extends State<MainPage> {
             ),
             Expanded(
               child: ListView.separated(
-                itemCount: filteredServices.length, // Usa la longitud de la lista de servicios filtrados
+                itemCount: filteredServices.length,
                 separatorBuilder: (context, index) => const SizedBox(height: 10),
                 itemBuilder: (context, index) {
-                  Service service = filteredServices[index]; // Usa el servicio filtrado para cada índice
                   return ServiceCard(
-                    service: service,
+                    service: filteredServices[index],
                   );
                 },
               ),
@@ -180,6 +355,7 @@ class Service {
   final String address;
   final String phoneNumber;
   final bool isFavorited;
+  final List<String> category; // Asegúrate de que tienes una lista de categorías en tu modelo.
 
   Service({
     required this.providerName,
@@ -188,6 +364,7 @@ class Service {
     required this.address,
     required this.phoneNumber,
     required this.isFavorited,
+    required this.category,
   });
 }
 
@@ -199,6 +376,7 @@ List<Service> services = [
     address: 'Calle Falsa 123',
     phoneNumber: '123-456-7890',
     isFavorited: true,
+    category: ['Cerrajero'], // Categoría asociada con este servicio.
   ),
   Service(
     providerName: 'Pedro Chef',
@@ -207,6 +385,7 @@ List<Service> services = [
     address: 'Calle Falsa 123',
     phoneNumber: '123-456-7890',
     isFavorited: true,
+    category: ['Chef'], // Categoría asociada con este servicio.
   ),
   Service(
     providerName: 'Laura Albañil',
@@ -215,20 +394,103 @@ List<Service> services = [
     address: 'Calle Falsa 123',
     phoneNumber: '123-456-7890',
     isFavorited: true,
+    category: ['Carpintero'], // Asumiendo que se trata de servicios de construcción.
   ),
   Service(
     providerName: 'Sara Pastelera',
-    serviceName: 'Cerrajería urgente',
+    serviceName: 'Pastelería deliciosa',
     assetName: 'assets/images/pastelera.png',
     address: 'Calle Falsa 123',
     phoneNumber: '123-456-7890',
     isFavorited: true,
+    category: ['Chef'], // Aunque es pastelera, está bajo la categoría de chef para la cocina.
   ),
-  // Añade más servicios aquí con diferentes nombres e imágenes
-  // ...
+  Service(
+    providerName: 'Pablo Fontanero',
+    serviceName: 'Reparación de tuberías',
+    assetName: 'assets/images/fontanero.png',
+    address: 'Avenida Principal 456',
+    phoneNumber: '987-654-3210',
+    isFavorited: false,
+    category: ['Fontanero'],
+  ),
+  Service(
+    providerName: 'Elena Electricista',
+    serviceName: 'Instalaciones eléctricas',
+    assetName: 'assets/images/electricista.png',
+    address: 'Barrio del Pilar 789',
+    phoneNumber: '567-890-1234',
+    isFavorited: true,
+    category: ['Electricista'],
+  ),
+  Service(
+    providerName: 'Ana Niñera',
+    serviceName: 'Cuidado infantil profesional',
+    assetName: 'assets/images/ninera.png',
+    address: 'Urbanización Los Pinos 101',
+    phoneNumber: '234-567-8910',
+    isFavorited: false,
+    category: ['Niñera'],
+  ),
+  Service(
+    providerName: 'Chef Rodrigo',
+    serviceName: 'Servicios de catering gourmet',
+    assetName: 'assets/images/chef.png',
+    address: 'Residencial El Bosque 202',
+    phoneNumber: '345-678-9012',
+    isFavorited: true,
+    category: ['Chef'],
+  ),
+  Service(
+    providerName: 'Luis Peluquero',
+    serviceName: 'Cortes y estilismo',
+    assetName: 'assets/images/peluquero.png',
+    address: 'Plaza del Centro 303',
+    phoneNumber: '456-789-0123',
+    isFavorited: false,
+    category: ['Peluquero'],
+  ),
+  Service(
+    providerName: 'María Técnica de PC',
+    serviceName: 'Reparación y mantenimiento de PC',
+    assetName: 'assets/images/tecnico_pc.png',
+    address: 'Calle Nueva 404',
+    phoneNumber: '567-890-1234',
+    isFavorited: true,
+    category: ['Técnico de PC'],
+  ),
+  Service(
+    providerName: 'Jorge Agente Inmobiliario',
+    serviceName: 'Venta y alquiler de propiedades',
+    assetName: 'assets/images/agente_inmobiliario.png',
+    address: 'Bulevar Sunset 505',
+    phoneNumber: '678-901-2345',
+    isFavorited: false,
+    category: ['Agente Inmobiliario'],
+  ),
+  Service(
+    providerName: 'Carlos Chófer',
+    serviceName: 'Servicio de transporte personal',
+    assetName: 'assets/images/chofer.png',
+    address: 'Avenida Libertad 606',
+    phoneNumber: '789-012-3456',
+    isFavorited: true,
+    category: ['Chófer'],
+  ),
+  Service(
+    providerName: 'Tomás Carpintero',
+    serviceName: 'Carpintería y mueblería a medida',
+    assetName: 'assets/images/carpintero.png',
+    address: 'Calle de la Madera 707',
+    phoneNumber: '890-123-4567',
+    isFavorited: false,
+    category: ['Carpintero'],
+  ),
+  // Agrega más servicios aquí con sus categorías correspondientes.
 ];
 
-List<Service> filteredServices = List.from(services);
+
+List<Service> filteredServices = [];
 
 
 
@@ -272,8 +534,8 @@ class ServiceCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(service.providerName, style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text(service.serviceName),
+                          Text(service.providerName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)), // Aumentado el tamaño de la fuente
+                          Text(service.serviceName, style: TextStyle(fontSize: 14)), // Aumentado el tamaño de la fuente
                         ],
                       ),
                     ),
@@ -289,6 +551,7 @@ class ServiceCard extends StatelessWidget {
     );
   }
 }
+
 
 
 
