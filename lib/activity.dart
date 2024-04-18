@@ -242,11 +242,17 @@ class _ActivityPageState extends State<ActivityPage> {
         length: 2, // Número total de pestañas
         child: Column(
           children: <Widget>[
-            TabBar(
-              tabs: [
-                Tab(text: 'Chats'),
-                Tab(text: 'Notificaciones'),
-              ],
+            Container(
+              color: Colors.white, // Color de fondo del TabBar
+              height: 60, // Ajustar la altura aquí
+              child: TabBar(
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.grey,
+                tabs: [
+                  Tab(child: Text('Chats', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black))),  // Aumentar el tamaño del texto
+                  Tab(child: Text('Notificaciones', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black))),
+                ],
+              ),
             ),
             Expanded(
               child: TabBarView(
@@ -259,11 +265,12 @@ class _ActivityPageState extends State<ActivityPage> {
           ],
         ),
       ),
+
     );
   }
 
   Widget _buildChatsView() {
-    // Vista de la pestaña de Chats
+    // Vista de la pestaña de Chats con un diseño más profesional y atractivo
     return ListView.builder(
       itemCount: chats.length,
       itemBuilder: (context, index) {
@@ -274,42 +281,82 @@ class _ActivityPageState extends State<ActivityPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    ChatScreen(
-                        chat: chat), // Asegúrate de que ChatScreen acepte un parámetro de tipo ChatItem
+                builder: (context) => ChatScreen(chat: chat),
               ),
             );
           },
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundImage: AssetImage(chat.profileImage),
-            ),
-            title: Text(
-              chat.name,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
-            subtitle: Text(chat.lastMessage),
-            trailing: chat.unreadMessages > 0
-                ? CircleAvatar(
-              radius: 12,
-              backgroundColor: Colors.red,
-              child: Text(
-                '${chat.unreadMessages}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  spreadRadius: 1,
+                  blurRadius: 6,
+                  offset: Offset(0, 2),
                 ),
-              ),
-            )
-                : null,
+              ],
+            ),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage(chat.profileImage),
+                  radius: 24,
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        chat.name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.black87
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        chat.lastMessage,
+                        style: TextStyle(
+                          color: Colors.grey[800],
+                          fontSize: 14,
+
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+                if (chat.unreadMessages > 0)
+                  Container(
+                    padding: EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                      '${chat.unreadMessages}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+              ],
+            ),
           ),
         );
       },
     );
   }
+
 
 
   Widget _buildNotificationsView() {
@@ -328,9 +375,7 @@ class _ActivityPageState extends State<ActivityPage> {
           child: ListTile(
             leading: Icon(
               Icons.notifications,
-              color: Theme
-                  .of(context)
-                  .primaryColor,
+              color: Colors.purple[200],
               size: 40,
             ),
             title: Text(
