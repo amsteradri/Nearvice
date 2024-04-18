@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'custom_bottom_nav_bar.dart';
 import 'chat.dart';
+import 'package:intl/intl.dart';
+
 
 class ChatItem {
   final String profileImage;
   final String name;
   final String lastMessage;
   final int unreadMessages;
+  final DateTime lastMessageTime;  // Nuevo campo para la hora del último mensaje
 
   ChatItem({
     required this.profileImage,
     required this.name,
     required this.lastMessage,
     this.unreadMessages = 0,
+    required this.lastMessageTime, // Asegúrate de pasar este parámetro al crear un ChatItem
   });
 }
+
 
 class NotificationItem {
   final String title;
@@ -36,85 +41,10 @@ class ActivityPage extends StatefulWidget {
 class _ActivityPageState extends State<ActivityPage> {
   List<ChatItem> chats = [];
   List<NotificationItem> notifications = [];
+  List<ChatItem> filteredChats = [];
   TextEditingController _searchController = TextEditingController(); // Controlador de texto
   bool _isSearchFocused = false; // Estado de foco de búsqueda
   bool _isClearVisible = false; // Estado de visibilidad del botón de limpiar
-
-  Widget _buildTitle() {
-    if (_isSearchFocused) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 0.0),
-        // Set padding to 0 or adjust as needed to align left
-        child: Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width * 1, // Increase the width to 95% of the screen width
-          decoration: BoxDecoration(
-            color: Colors.white, // Background color of the container
-            borderRadius: BorderRadius.circular(
-                20), // Rounded corners of the container
-          ),
-          child: TextField(
-            autofocus: true, // Automatically focus the text field
-            controller: _searchController,
-            onChanged: (value) {
-              setState(() {
-                _isClearVisible =
-                    value.isNotEmpty; // Show or hide the clear icon
-              });
-            },
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(
-                  vertical: 0, horizontal: 20.0),
-              // Padding inside the text field
-              hintText: 'Buscar...',
-              border: InputBorder.none,
-              suffixIcon: _isClearVisible
-                  ? IconButton(
-                icon: Icon(Icons.clear),
-                onPressed: () {
-                  _searchController.clear();
-                  _isClearVisible = false;
-                },
-              )
-                  : null,
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Text(
-        'Actividad',
-        style: TextStyle(color: Colors.white),
-      );
-    }
-  }
-
-
-  Widget _buildLeadingIcon() {
-    if (_isSearchFocused) {
-      return IconButton(
-        icon: Icon(Icons.search, color: Colors.grey),
-        onPressed: () {
-          setState(() {
-            _isSearchFocused = false;
-            _searchController.clear();
-          });
-        },
-      );
-    } else {
-      return IconButton(
-        icon: Icon(Icons.search, color: Colors.grey),
-        onPressed: () {
-          setState(() {
-            _isSearchFocused = true;
-          });
-        },
-      );
-    }
-  }
-
 
   @override
   void initState() {
@@ -126,26 +56,201 @@ class _ActivityPageState extends State<ActivityPage> {
         name: 'Adrian Vaquis',
         lastMessage: 'Hola, ¿qué tal tu día?',
         unreadMessages: 2,
+        lastMessageTime: DateTime.now().subtract(Duration(minutes: 10)),
       ),
       ChatItem(
         profileImage: 'assets/images/ninera.png',
         name: 'Julia Ramos',
         lastMessage: '¿Recibiste el archivo que te envié?',
         unreadMessages: 1,
+        lastMessageTime: DateTime.now().subtract(Duration(minutes: 40)),
       ),
       ChatItem(
         profileImage: 'assets/images/albañil.png',
         name: 'Marco Pineda',
         lastMessage: 'Mañana nos vemos para el café.',
         unreadMessages: 0,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 3)),
       ),
       ChatItem(
         profileImage: 'assets/images/chef.png',
         name: 'Lorena Ruiz',
         lastMessage: '¡Gracias por tu ayuda con el proyecto!',
         unreadMessages: 5,
+        lastMessageTime: DateTime.now().subtract(Duration(days: 2)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/peluquero.png',
+        name: 'Carlos Giménez',
+        lastMessage: 'Tu coche está listo para recoger.',
+        unreadMessages: 0,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 1)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/profile_pic.jpg',
+        name: 'Fernando Torres',
+        lastMessage: 'El jardín ha quedado excelente.',
+        unreadMessages: 1,
+        lastMessageTime: DateTime.now().subtract(Duration(days: 1)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/burguer.png',
+        name: 'Isabel Marín',
+        lastMessage: 'La próxima clase hemos cambiado el horario.',
+        unreadMessages: 3,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 5)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/carpintero.png',
+        name: 'Juan Martínez',
+        lastMessage: '¿Podemos discutir el diseño mañana?',
+        unreadMessages: 0,
+        lastMessageTime: DateTime.now().subtract(Duration(minutes: 15)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/pastelera.png',
+        name: 'Sofia Núñez',
+        lastMessage: 'Tu pedido está en camino.',
+        unreadMessages: 2,
+        lastMessageTime: DateTime.now().subtract(Duration(days: 1)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/dentista.png',
+        name: 'Elena Rodríguez',
+        lastMessage: 'Recuerda tu cita mañana a primera hora.',
+        unreadMessages: 0,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 4)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/chofer.png',
+        name: 'Luis Domínguez',
+        lastMessage: 'He enviado las fotos del evento.',
+        unreadMessages: 4,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 2)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/peluquero.png',
+        name: 'Ana Pereira',
+        lastMessage: '¿Cómo está el pequeño Rocky?',
+        unreadMessages: 2,
+        lastMessageTime: DateTime.now().subtract(Duration(minutes: 25)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/fontanero.png',
+        name: 'David Soto',
+        lastMessage: 'He actualizado tu plan de inversiones.',
+        unreadMessages: 1,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 6)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/tatuador.png',
+        name: 'Miguel Ángel',
+        lastMessage: '¿Quieres revisar algunos diseños?',
+        unreadMessages: 5,
+        lastMessageTime: DateTime.now().subtract(Duration(days: 3)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/albañil.png',
+        name: 'Roberto López',
+        lastMessage: 'Mañana aumentamos la intensidad del entrenamiento.',
+        unreadMessages: 0,
+        lastMessageTime: DateTime.now().subtract(Duration(minutes: 50)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/electricista.png',
+        name: 'Sandra Gutiérrez',
+        lastMessage: 'Confirmo la hora de la limpieza para mañana.',
+        unreadMessages: 3,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 1)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/pintor.png',
+        name: 'Óscar Muñoz',
+        lastMessage: '¿Qué te parece el color que seleccionamos?',
+        unreadMessages: 0,
+        lastMessageTime: DateTime.now().subtract(Duration(days: 2)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/agente_inmobiliario.png',
+        name: 'Clara Fernández',
+        lastMessage: '¡La actuación de ayer fue un éxito!',
+        unreadMessages: 4,
+        lastMessageTime: DateTime.now().subtract(Duration(minutes: 30)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/cerrajero.png',
+        name: 'Antonio Ramírez',
+        lastMessage: 'He revisado tu caso y te he enviado los detalles por email.',
+        unreadMessages: 1,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 8)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/tecnico_pc.png',
+        name: 'José Vidal',
+        lastMessage: 'Tu transporte ha sido arreglado, todo listo para el jueves.',
+        unreadMessages: 0,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 12)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/peluquero.png',
+        name: 'Carlos González',
+        lastMessage: 'Tu nuevo estilo ha sido un éxito.',
+        unreadMessages: 2,
+        lastMessageTime: DateTime.now().subtract(Duration(minutes: 10)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/ninera.png',
+        name: 'Marta López',
+        lastMessage: 'Los niños están listos para dormir.',
+        unreadMessages: 1,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 2)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/albañil.png',
+        name: 'Jorge Gutiérrez',
+        lastMessage: 'El muro quedará listo mañana.',
+        unreadMessages: 0,
+        lastMessageTime: DateTime.now().subtract(Duration(days: 1)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/burguer.png',
+        name: 'Tomás Burger',
+        lastMessage: 'La promoción de hamburguesas empieza el lunes.',
+        unreadMessages: 3,
+        lastMessageTime: DateTime.now().subtract(Duration(days: 2)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/carpintero.png',
+        name: 'Carlos González',
+        lastMessage: '¿Cómo te quedó el corte de pelo?',
+        unreadMessages: 1,
+        lastMessageTime: DateTime.now().subtract(Duration(minutes: 5)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/ninera.png',
+        name: 'Ana Martínez',
+        lastMessage: 'Los niños preguntaron por ti.',
+        unreadMessages: 0,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 1)),
+      ),
+      // Repite con todos los servicios disponibles...
+      ChatItem(
+        profileImage: 'assets/images/chef.png',
+        name: 'Pedro Chef',
+        lastMessage: 'Mañana cocinaremos algo especial.',
+        unreadMessages: 2,
+        lastMessageTime: DateTime.now().subtract(Duration(days: 1)),
+      ),
+      ChatItem(
+        profileImage: 'assets/images/fontanero.png',
+        name: 'Mario Tubos',
+        lastMessage: 'El problema de la tubería está resuelto.',
+        unreadMessages: 3,
+        lastMessageTime: DateTime.now().subtract(Duration(hours: 2)),
       ),
     ];
+
+
 
     notifications = [
       NotificationItem(
@@ -199,7 +304,79 @@ class _ActivityPageState extends State<ActivityPage> {
         date: DateTime.now().subtract(Duration(days: 10)),
       ),
     ];
+
+    filteredChats = List.from(chats);
   }
+
+
+
+  Widget _buildTitle() {
+    return _isSearchFocused
+        ? Container(
+      height: 40, // Altura del TextField
+      margin: EdgeInsets.only(left: 8.0), // Margen izquierdo para alinear a la izquierda
+      decoration: BoxDecoration(
+        color: Colors.white, // Color de fondo
+        borderRadius: BorderRadius.circular(20), // Bordes redondeados
+      ),
+      child: TextField(
+        controller: _searchController,
+        autofocus: true,
+        decoration: InputDecoration(
+          hintText: 'Buscar...',
+          contentPadding: EdgeInsets.only(left: 16.0), // Ajusta el padding interno
+          border: InputBorder.none,
+          suffixIcon: _isClearVisible
+              ? IconButton(
+            icon: Icon(Icons.clear),
+            onPressed: () {
+              _searchController.clear();
+              setState(() {
+                _isClearVisible = false;
+              });
+            },
+          )
+              : null,
+        ),
+        onChanged: (text) {
+          setState(() {
+            // Actualiza la lista de chats con el filtro aplicado
+            filteredChats = chats.where((chat) {
+              return chat.name.toLowerCase().contains(text.toLowerCase());
+            }).toList();
+          });
+        },
+      ),
+    )
+        : Text(
+      'Actividad',
+      style: TextStyle(color: Colors.white),
+    );
+  }
+
+
+
+
+
+  Widget _buildLeadingIcon() {
+    return IconButton(
+      icon: Icon(_isSearchFocused ? Icons.arrow_back : Icons.search, color: Colors.grey),
+      onPressed: () {
+        setState(() {
+          if (_isSearchFocused) {
+            // Cuando se presiona la flecha hacia atrás para dejar de buscar
+            _isSearchFocused = false;
+            _searchController.clear();
+            _isClearVisible = false;
+          } else {
+            // Cuando se presiona la lupa para empezar a buscar
+            _isSearchFocused = true;
+          }
+        });
+      },
+    );
+  }
+
 
 
   @override
@@ -216,26 +393,47 @@ class _ActivityPageState extends State<ActivityPage> {
         centerTitle: true,
         backgroundColor: Colors.black,
         actions: [
-          PopupMenuButton(
-            icon: Icon(Icons.settings),
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(
-                  child: Text('Ordenar por nombre'),
+          Padding(
+            padding: const EdgeInsets.only(right: 19.0),
+            child: PopupMenuButton<String>(
+              icon: Icon(Icons.filter_alt_outlined, color: Colors.grey, size: 30), // Aumentar el tamaño del icono aquí
+              onSelected: (String result) {
+                setState(() {
+                  if (result == 'name') {
+                    // Ordenar por nombre
+                    chats.sort((a, b) => a.name.compareTo(b.name));
+                    // Actualiza filteredChats basándose en si la búsqueda está activa
+                    if (_isSearchFocused && _searchController.text.isNotEmpty) {
+                      filteredChats.sort((a, b) => a.name.compareTo(b.name));
+                    } else {
+                      filteredChats = List.from(chats); // Copia la lista ordenada a filteredChats
+                    }
+                  } else if (result == 'date') {
+                    // Ordenar por fecha
+                    chats.sort((a, b) => b.lastMessageTime.compareTo(a.lastMessageTime));
+                    // Actualiza filteredChats basándose en si la búsqueda está activa
+                    if (_isSearchFocused && _searchController.text.isNotEmpty) {
+                      filteredChats.sort((a, b) => b.lastMessageTime.compareTo(a.lastMessageTime));
+                    } else {
+                      filteredChats = List.from(chats); // Copia la lista ordenada a filteredChats
+                    }
+                  }
+                });
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                const PopupMenuItem<String>(
                   value: 'name',
+                  child: Text('Ordenar por nombre'),
                 ),
-                PopupMenuItem(
-                  child: Text('Ordenar por fecha'),
+                const PopupMenuItem<String>(
                   value: 'date',
+                  child: Text('Ordenar por fecha'),
                 ),
-                // Agrega más opciones de menú según sea necesario
-              ];
-            },
-            onSelected: (value) {
-              // Manejar la selección del menú aquí
-              print('Selected: $value');
-            },
-          ),
+              ],
+            ),
+          )
+
+
         ],
       ),
       body: DefaultTabController(
@@ -270,11 +468,11 @@ class _ActivityPageState extends State<ActivityPage> {
   }
 
   Widget _buildChatsView() {
-    // Vista de la pestaña de Chats con un diseño más profesional y atractivo
+    // Vista de la pestaña de Chats
     return ListView.builder(
-      itemCount: chats.length,
+      itemCount: filteredChats.length, // Usas filteredChats aquí
       itemBuilder: (context, index) {
-        final chat = chats[index];
+        final chat = filteredChats[index]; // Y aquí
         return InkWell(
           onTap: () {
             // Navegación a la pantalla de chat específica
@@ -287,7 +485,7 @@ class _ActivityPageState extends State<ActivityPage> {
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
@@ -315,7 +513,7 @@ class _ActivityPageState extends State<ActivityPage> {
                         chat.name,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 18,
                             color: Colors.black87
                         ),
                       ),
@@ -323,12 +521,18 @@ class _ActivityPageState extends State<ActivityPage> {
                       Text(
                         chat.lastMessage,
                         style: TextStyle(
-                          color: Colors.grey[800],
+                          color: Colors.black,
                           fontSize: 14,
-
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        DateFormat('hh:mm a').format(chat.lastMessageTime), // Formatea la hora del último mensaje
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                        ),
                       ),
                     ],
                   ),
@@ -356,6 +560,7 @@ class _ActivityPageState extends State<ActivityPage> {
       },
     );
   }
+
 
 
 

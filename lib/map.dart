@@ -37,6 +37,66 @@ class _MapScreenState extends State<MapScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     double toolbarHeight = screenHeight * 0.1; // Ajusta a 10% de la altura de la pantalla
+    var markers = [
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(41.497638, 1.840593), // Punto central
+        builder: (ctx) => Container(
+          child: Icon(Icons.location_on, size: 40.0, color: Colors.blue),
+        ),
+      ),
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(41.499000, 1.843000), // Más al norte y un poco al este
+        builder: (ctx) => Container(
+          child: Icon(Icons.location_on, size: 40.0, color: Colors.green),
+        ),
+      ),
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(41.495000, 1.837000), // Más al sur y un poco al oeste
+        builder: (ctx) => Container(
+          child: Icon(Icons.location_on, size: 40.0, color: Colors.red),
+        ),
+      ),
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(41.500000, 1.845000), // Más al noreste
+        builder: (ctx) => Container(
+          child: Icon(Icons.location_on, size: 40.0, color: Colors.orange),
+        ),
+      ),
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(41.494000, 1.835000), // Más al suroeste
+        builder: (ctx) => Container(
+          child: Icon(Icons.location_on, size: 40.0, color: Colors.purple),
+        ),
+      ),
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(41.500000, 1.834000), // Noroeste
+        builder: (ctx) => Container(
+          child: Icon(Icons.location_on, size: 40.0, color: Colors.yellow),
+        ),
+      ),
+      Marker(
+        width: 80.0,
+        height: 80.0,
+        point: LatLng(41.492000, 1.846000), // Sureste
+        builder: (ctx) => Container(
+          child: Icon(Icons.location_on, size: 40.0, color: Colors.cyan),
+        ),
+      ),
+    ];
+
+
 
     return MaterialApp(
       home: Scaffold(
@@ -106,14 +166,15 @@ class _MapScreenState extends State<MapScreen> {
           children: [
             FlutterMap(
               options: MapOptions(
-                center: LatLng(41.497638, 1.840593),
-                zoom: 16,
+                center: LatLng(41.497638, 1.840593), // Centro del mapa
+                zoom: 15,
               ),
               children: [
                 TileLayer(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   userAgentPackageName: 'com.example.app',
                 ),
+                MarkerLayer(markers: markers),
               ],
             ),
           ],
