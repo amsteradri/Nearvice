@@ -197,32 +197,36 @@ class _ActivityPageState extends State<ActivityPage> {
 
   Widget _buildTitle() {
     if (_isSearchFocused) {
-      return Container(
-        decoration: BoxDecoration(
-          color: Colors.white, // Color de fondo del contenedor
-          borderRadius: BorderRadius.circular(20), // Bordes redondeados del contenedor
-        ),
-        child: TextField(
-          controller: _searchController,
-          onChanged: (value) {
-            setState(() {
-              _isClearVisible = value.isNotEmpty;
-            });
-          },
-          decoration: InputDecoration(
-            hintText: 'Buscar...',
-            border: InputBorder.none,
-            suffixIcon: _isClearVisible
-                ? IconButton(
-              icon: Icon(Icons.clear),
-              onPressed: () {
-                setState(() {
+      return Padding(
+        padding: const EdgeInsets.only(left: 0.0), // Set padding to 0 or adjust as needed to align left
+        child: Container(
+          width: MediaQuery.of(context).size.width * 1, // Increase the width to 95% of the screen width
+          decoration: BoxDecoration(
+            color: Colors.white, // Background color of the container
+            borderRadius: BorderRadius.circular(20), // Rounded corners of the container
+          ),
+          child: TextField(
+            autofocus: true, // Automatically focus the text field
+            controller: _searchController,
+            onChanged: (value) {
+              setState(() {
+                _isClearVisible = value.isNotEmpty; // Show or hide the clear icon
+              });
+            },
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 20.0), // Padding inside the text field
+              hintText: 'Buscar...',
+              border: InputBorder.none,
+              suffixIcon: _isClearVisible
+                  ? IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () {
                   _searchController.clear();
                   _isClearVisible = false;
-                });
-              },
-            )
-                : null,
+                },
+              )
+                  : null,
+            ),
           ),
         ),
       );

@@ -10,22 +10,62 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _selectedIndex = 0;  // Índice inicial para la pestaña seleccionada
+  Map<String, bool> _selectedFilters = {};
+  TextEditingController _searchController = TextEditingController();
+  Map<String, String> _filterEmojis = {
+    'Cerrajero': '🔑',
+    'Fontanero': '🚰',
+    'Electricista': '💡',
+    'Niñera': '👶',
+    'Chef': '🍳',
+    'Peluquero': '💈',
+    'Técnico de PC': '💻',
+    'Agente Inmobiliario': '🏠',
+    'Chófer': '🚗',
+    'Carpintero': '🛠️',
+    'Pintor': '🎨',
+    'Jardinero': '🌿',
+    'Fotógrafo': '📷',
+    'Cuidador de mascotas': '🐕',
+    'Entrenador personal': '🏋️',
+    'Mecánico': '🔧',
+    'Asesor financiero': '💼',
+    'Profesor particular': '📚',
+    'Organizador de eventos': '🔖',
+    'Músico': '🎵',
+  };
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedFilters = _filterEmojis.keys.fold({}, (Map<String, bool> map, String key) {
+      map[key] = false;
+      return map;
     });
   }
-
-  TextEditingController _searchController = TextEditingController();
-  bool _isSearchFocused = false;
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
   }
+
+  Widget _buildFilterChip(BuildContext context, String label) {
+    return ChoiceChip(
+      label: Text(label),
+      avatar: Text(_filterEmojis[label]!),
+      selected: _selectedFilters[label]!,
+      onSelected: (bool selected) {
+        setState(() {
+          _selectedFilters[label] = selected;
+        });
+      },
+      selectedColor: Colors.lightGreen[100],
+      showCheckmark: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // Envuelve el Scaffold con MaterialApp y configura los temas aquí si es necesario
@@ -41,7 +81,7 @@ class _MainPageState extends State<MainPage> {
           titleSpacing: 0,
           toolbarHeight: MediaQuery.of(context).size.height * 0.08,
           title: GestureDetector(
-            onTap: () => setState(() => _isSearchFocused = true),
+
             child: Container(
               margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               decoration: BoxDecoration(
@@ -90,27 +130,47 @@ class _MainPageState extends State<MainPage> {
           iconTheme: IconThemeData(size: 28),
         ),
 
-        body: ListView.separated(
-          itemCount: 6,
-          separatorBuilder: (context, index) => const SizedBox(height: 10),
-          itemBuilder: (context, index) {
-            return ServiceCard(
-              service: Service(
-                providerName: 'Manolo Cerrajero',
-                serviceName: 'Disponible · Precio medio 70€ · 35-45min',
-                assetName: 'assets/images/cerrajero.png',
-                address: '123 Example St, City $index',
-                phoneNumber: '123-456-7890',
-                isFavorited: index % 2 == 0,
+        body: Column(
+          children: [
+            SizedBox(
+              height: 60, // Altura fija para la barra de desplazamiento
+              child: ListView(
+                scrollDirection: Axis.horizontal, // Establece la dirección del desplazamiento a horizontal
+                children: _filterEmojis.keys.map((String label) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0), // Adjust horizontal padding here
+                    child: _buildFilterChip(context, label),
+                  );
+                }).toList(),
               ),
-            );
-          },
+            ),
+            Expanded(
+              child: ListView.separated(
+                itemCount: 6,
+                separatorBuilder: (context, index) => const SizedBox(height: 10),
+                itemBuilder: (context, index) {
+                  return ServiceCard(
+                    service: Service(
+                      providerName: 'Manolo Cerrajero',
+                      serviceName: 'Disponible · Precio medio 70€ · 35-45min',
+                      assetName: 'assets/images/cerrajero.png',
+                      address: '123 Example St, City $index',
+                      phoneNumber: '123-456-7890',
+                      isFavorited: index % 2 == 0,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
-
       ),
     );
   }
 }
+
+
+
 
 class Service {
   final String providerName;
