@@ -100,7 +100,14 @@ class _MainPageState extends State<MainPage> {
                         border: InputBorder.none,
                       ),
                       onChanged: (text) {
-                        setState(() {});
+                        setState(() {
+                          // Filtra la lista de servicios en base al texto ingresado
+                          filteredServices = services.where((service) {
+                            // Aquí asumimos que `providerName` es la propiedad que deseas buscar
+                            // Puedes ajustar esto para buscar en diferentes propiedades según tus necesidades
+                            return service.providerName.toLowerCase().contains(text.toLowerCase());
+                          }).toList();
+                        });
                       },
                     ),
                   ),
@@ -146,18 +153,12 @@ class _MainPageState extends State<MainPage> {
             ),
             Expanded(
               child: ListView.separated(
-                itemCount: 6,
+                itemCount: filteredServices.length, // Usa la longitud de la lista de servicios filtrados
                 separatorBuilder: (context, index) => const SizedBox(height: 10),
                 itemBuilder: (context, index) {
+                  Service service = filteredServices[index]; // Usa el servicio filtrado para cada índice
                   return ServiceCard(
-                    service: Service(
-                      providerName: 'Manolo Cerrajero',
-                      serviceName: 'Disponible · Precio medio 70€ · 35-45min',
-                      assetName: 'assets/images/cerrajero.png',
-                      address: '123 Example St, City $index',
-                      phoneNumber: '123-456-7890',
-                      isFavorited: index % 2 == 0,
-                    ),
+                    service: service,
                   );
                 },
               ),
@@ -189,6 +190,45 @@ class Service {
     required this.isFavorited,
   });
 }
+
+List<Service> services = [
+  Service(
+    providerName: 'Manolo Cerrajero',
+    serviceName: 'Cerrajería urgente',
+    assetName: 'assets/images/cerrajero.png',
+    address: 'Calle Falsa 123',
+    phoneNumber: '123-456-7890',
+    isFavorited: true,
+  ),
+  Service(
+    providerName: 'Pedro Chef',
+    serviceName: 'Chef de primera',
+    assetName: 'assets/images/chef.png',
+    address: 'Calle Falsa 123',
+    phoneNumber: '123-456-7890',
+    isFavorited: true,
+  ),
+  Service(
+    providerName: 'Laura Albañil',
+    serviceName: 'Albañileria premium',
+    assetName: 'assets/images/albañil.png',
+    address: 'Calle Falsa 123',
+    phoneNumber: '123-456-7890',
+    isFavorited: true,
+  ),
+  Service(
+    providerName: 'Sara Pastelera',
+    serviceName: 'Cerrajería urgente',
+    assetName: 'assets/images/pastelera.png',
+    address: 'Calle Falsa 123',
+    phoneNumber: '123-456-7890',
+    isFavorited: true,
+  ),
+  // Añade más servicios aquí con diferentes nombres e imágenes
+  // ...
+];
+
+List<Service> filteredServices = List.from(services);
 
 
 
