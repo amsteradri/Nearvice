@@ -111,10 +111,9 @@ class LoginPage extends StatelessWidget {
                       SizedBox(height: 24),
                       OutlinedButton(
                         onPressed: () {
-                          Navigator.pushAndRemoveUntil(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => const MainPage()),
-                                (Route<dynamic> route) => false,
                           );
                         },
                         style: ButtonStyle(
