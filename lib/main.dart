@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'profile_page.dart';
 import 'home.dart';
+import 'SignUpPage.dart';
 
 
 const brokenWhite = Color(0xFFFFFEEE); // Esto representa un blanco con un toque de gris
@@ -110,9 +111,10 @@ class LoginPage extends StatelessWidget {
                       SizedBox(height: 24),
                       OutlinedButton(
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(builder: (context) => const MainPage()),
+                                (Route<dynamic> route) => false,
                           );
                         },
                         style: ButtonStyle(
@@ -126,10 +128,15 @@ class LoginPage extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => SignUpScreen()),
+                          );
+                        },
                         style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.black),
                           foregroundColor: MaterialStateProperty.all(Colors.white),
-                          side: MaterialStateProperty.all(BorderSide(color: Colors.white)),
                           padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0)), // Aumenta el padding
                           textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)), // Aumenta el tamaño del texto
                           minimumSize: MaterialStateProperty.all(Size(180, 50)), // Establece un tamaño mínimo para el botón
