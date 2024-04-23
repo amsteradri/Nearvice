@@ -7,28 +7,10 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up 1/3'),
+        title: Text('Sign Up', style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.black,
         centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(20),
-          child: Container(
-            height: 20,
-            color: Colors.grey[300],
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Container(color: Colors.green),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(), // Los otros dos segmentos permanecen grises
-                ),
-              ],
-            ),
-          ),
-        ),
+
       ),
       body: Column(
         children: [

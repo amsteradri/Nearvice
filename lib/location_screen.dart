@@ -1,5 +1,6 @@
 // location_screen.dart
 import 'package:flutter/material.dart';
+import 'home.dart'; // Asegúrate de que este import corresponda al lugar correcto de tu archivo HomePage
 
 class LocationScreen extends StatefulWidget {
   @override
@@ -23,10 +24,18 @@ class _LocationScreenState extends State<LocationScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   labelText: 'Dirección',
+                  labelStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.location_on),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 1.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 2.0),
+                  ),
+                  prefixIcon: Icon(Icons.location_on, color: Colors.black),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -38,13 +47,17 @@ class _LocationScreenState extends State<LocationScreen> {
               SizedBox(height: 40),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Background color
-                  foregroundColor: Colors.white, // Text Color (Foreground color)
+                  backgroundColor: Colors.black, // Color de fondo del botón
+                  foregroundColor: Colors.white, // Color del texto
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20), // Añade un poco más de relleno al botón
                 ),
                 child: Text('Registrar Ubicación'),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // Aquí agregarías la lógica para guardar la ubicación
+                    Navigator.of(context).pushReplacement( // Cambiado a pushReplacement para evitar volver a la pantalla de ubicación
+                      MaterialPageRoute(builder: (context) => MainPage()),
+                    );
                   }
                 },
               ),
@@ -52,6 +65,7 @@ class _LocationScreenState extends State<LocationScreen> {
           ),
         ),
       ),
+      backgroundColor: Colors.white, // Fondo de toda la pantalla
     );
   }
 }

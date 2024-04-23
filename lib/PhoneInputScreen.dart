@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Importar para usar TextInputType
+import 'package:nearvice/location_screen.dart';
 import 'home.dart';
 
 class PhoneInputScreen extends StatefulWidget {
@@ -45,7 +46,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                         ),
                         dropdownColor: Colors.grey[800],
                         value: _selectedPrefix,
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.black),
                         onChanged: (value) {
                           setState(() {
                             _selectedPrefix = value!;
@@ -64,10 +65,13 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                       child: TextFormField(
                         cursorHeight: 20,
                         controller: _phoneController,
+                        style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           labelText: 'Número de teléfono',
-                          labelStyle: TextStyle(color: Colors.white),
-                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(color: Colors.black),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black), // Borde en color negro
+                            ),
                         ),
                         keyboardType: TextInputType.phone,
                         validator: (value) {
@@ -93,7 +97,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue, // Background color
-                      foregroundColor: Colors.white, // Text Color
+                      foregroundColor: Colors.black, // Text Color
                       minimumSize: Size(200, 50),  // Establece el tamaño mínimo del botón
                       maximumSize: Size(200, 50),  // Establece el tamaño máximo del botón
                     ),
@@ -110,9 +114,16 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                       child: TextFormField(
                         textAlign: TextAlign.center,
                         controller: _codeController,
+                        style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black, width: 1.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black, width: 2.0),
+                          ),
                           hintText: '_ _ _  _ _ _ ',
+                          hintStyle: TextStyle(color: Colors.grey),
                         ),
                         keyboardType: TextInputType.number,
                         validator: (value) {
@@ -127,12 +138,11 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                     ElevatedButton(
                       child: Text('Validar código'),
                       onPressed: () {
-                        // Aquí puedes incluir la lógica para validar el código antes de navegar
-                        // Si el código es válido, entonces navega a la HomePage
+                        // Lógica de validación del código
                         Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => MainPage()), // Asegúrate de que HomePage es el widget de tu página principal
-                              (Route<dynamic> route) => false, // Esto elimina todas las rutas anteriores de la pila
+                          MaterialPageRoute(builder: (context) => LocationScreen()),
+                              (Route<dynamic> route) => false,
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -140,8 +150,6 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                         foregroundColor: Colors.white,
                       ),
                     ),
-
-
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
@@ -150,17 +158,19 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                         });
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey, // Background color for the "Edit" button
-                        foregroundColor: Colors.white, // Text color for the "Edit" button
+                        backgroundColor: Colors.grey,
+                        foregroundColor: Colors.white,
                       ),
                       child: Text('Editar número'),
                     ),
                   ],
                 ),
+
             ],
           ),
         ),
       ),
+      backgroundColor: Colors.white, // Fondo de toda la pantalla
     );
   }
 }
