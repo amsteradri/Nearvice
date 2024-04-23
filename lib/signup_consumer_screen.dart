@@ -29,23 +29,23 @@ class _SignUpConsumerScreenState extends State<SignUpConsumerScreen> {
                 decoration: InputDecoration(
                   labelText: 'Nombre y apellido',
                   labelStyle: TextStyle(
-                    color: Colors.white, // Color del texto cuando no está enfocado
+                    color: Colors.black, // Color del texto cuando no está enfocado
                   ),
                   floatingLabelBehavior: FloatingLabelBehavior.auto, // El label se mueve automáticamente cuando el campo está enfocado
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.white, // Color del borde cuando no está enfocado
+                      color: Colors.black, // Color del borde cuando no está enfocado
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.white, // Color del borde cuando está enfocado
+                      color: Colors.black, // Color del borde cuando está enfocado
                     ),
                   ),
-                  prefixIcon: Icon(Icons.person, color: Colors.white), // Color del ícono cuando no está enfocado
+                  prefixIcon: Icon(Icons.person, color: Colors.black), // Color del ícono cuando no está enfocado
                 ),
-                style: TextStyle(color: Colors.white), // Estilo del texto que el usuario introduce
-                cursorColor: Colors.white, // Color del cursor en el campo de texto
+                style: TextStyle(color: Colors.black), // Estilo del texto que el usuario introduce
+                cursorColor: Colors.black, // Color del cursor en el campo de texto
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, introduce tu nombre y apellido';
@@ -58,23 +58,23 @@ class _SignUpConsumerScreenState extends State<SignUpConsumerScreen> {
                 decoration: InputDecoration(
                   labelText: 'Correo electrónico',
                   labelStyle: TextStyle(
-                    color: Colors.white, // Color del texto cuando no está enfocado
+                    color: Colors.black, // Color del texto cuando no está enfocado
                   ),
                   floatingLabelBehavior: FloatingLabelBehavior.auto, // El label se mueve automáticamente cuando el campo está enfocado
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.white, // Color del borde cuando no está enfocado
+                      color: Colors.black, // Color del borde cuando no está enfocado
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.white, // Color del borde cuando está enfocado
+                      color: Colors.black, // Color del borde cuando está enfocado
                     ),
                   ),
-                  prefixIcon: Icon(Icons.email, color: Colors.white), // Color del ícono cuando no está enfocado
+                  prefixIcon: Icon(Icons.email, color: Colors.black), // Color del ícono cuando no está enfocado
                 ),
-                style: TextStyle(color: Colors.white), // Estilo del texto que el usuario introduce
-                cursorColor: Colors.white, // Color del cursor en el campo de texto
+                style: TextStyle(color: Colors.black), // Estilo del texto que el usuario introduce
+                cursorColor: Colors.black, // Color del cursor en el campo de texto
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -103,6 +103,7 @@ class _SignUpConsumerScreenState extends State<SignUpConsumerScreen> {
           ),
         ),
       ),
+      backgroundColor: Colors.white,
     );
   }
 }

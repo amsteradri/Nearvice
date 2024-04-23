@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'EditProfileScreen.dart';
+import 'AddCardScreen.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -199,8 +200,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: <Widget>[
               ListTile(
                 title: Text('Añadir tarjeta de crédito/débito'),
+                trailing: Icon(Icons.credit_card), // Icono opcional para el ListTile
                 onTap: () {
-                  // Lógica para añadir tarjeta
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AddCardScreen()),
+                  );
                 },
               ),
               ListTile(
