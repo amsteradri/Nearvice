@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nearvice/support.dart';
 import 'EditProfileScreen.dart';
 import 'AddCardScreen.dart';
 
@@ -282,6 +283,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Agregar más opciones de gestión de perfiles
             ],
           ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SupportPage()),
+              );
+            },
+            child: ListTile(
+              leading: Icon(Icons.live_help, color: Colors.black),
+              title: Text('Soporte', style: TextStyle(color: Colors.black)),
+            ),
+          )
 
 
 
