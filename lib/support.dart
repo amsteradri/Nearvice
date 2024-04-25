@@ -6,7 +6,7 @@ class SupportPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.08,
-        title: const Text('AJUSTES', style: TextStyle(color: Colors.white)),
+        title: const Text('Soporte', style: TextStyle(color: Colors.white)),
         iconTheme: IconThemeData(color: Colors.white), // Color de la flecha de retroceso
         centerTitle: true,
         backgroundColor: Colors.black,
@@ -41,7 +41,11 @@ class SupportPage extends StatelessWidget {
               onPressed: () {
                 // Aquí puedes añadir la lógica para enviar el problema
               },
-              child: Text('Enviar'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black, // Fondo negro
+                foregroundColor: Colors.white, // Texto blanco
+              ),
+              child: Text('Enviar'), // Letras blancas
             ),
           ],
         ),
@@ -50,7 +54,8 @@ class SupportPage extends StatelessWidget {
         onPressed: () {
           // Aquí puedes añadir la lógica para adjuntar archivos o hacer fotos
         },
-        child: Icon(Icons.attach_file),
+        backgroundColor: Colors.black, // Fondo negro
+        child: Icon(Icons.attach_file, color: Colors.white), // Clip blanco
       ),
     );
   }
