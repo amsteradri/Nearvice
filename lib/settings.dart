@@ -283,6 +283,75 @@ class _SettingsScreenState extends State<SettingsScreen> {
               // Agregar más opciones de gestión de perfiles
             ],
           ),
+          ExpansionTile(
+            leading: Icon(Icons.info_outline, color: Colors.black),
+            title: Text('FAQ', style: TextStyle(color: Colors.black)),
+            subtitle: Text('Algunas preguntas frequentes', style: TextStyle(color: Colors.grey)),
+            children: <Widget>[
+              ExpansionTile(
+                title: Text('¿Cómo añado mi ubicación actual?', style: TextStyle(color: Colors.black)),
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          'Para añadir tu ubicación actual, sigue estos pasos:',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        SizedBox(height: 8), // Separación añadida
+                        Text(
+                          '1. Abre la aplicación Nearvice.\n'
+                              '2. Ve a la sección de "Gestionar ubicaciones".\n'
+                              '3. Pulsa el botón "Añadir dirección".\n'
+                              '4. Selecciona "Usar ubicación actual" en el campo de dirección.\n'
+                              '5. Tu ubicación actual será añadida automáticamente.',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              ExpansionTile(
+                title: Text('¿Los pagos son seguros?', style: TextStyle(color: Colors.black)),
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      'Sí, los pagos son seguros',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ],
+              ),
+              ExpansionTile(
+                title: Text('¿Cómo cambio mi foto de perfil?', style: TextStyle(color: Colors.black)),
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          '1. Abre la aplicación Nearvice.\n'
+                              '2. Ve a la sección de "Perfil".\n'
+                              '3. Pulsa el engranaje de arriba a la derecha, que es el botón de ajustes.\n'
+                              '4. Pulsa el lápiz que verás arriba a la derecha de la pantalla, que es el botón para editar perfil.\n'
+                              '5. Finalmente, pulsa tu foto de perfil.',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+
+
           GestureDetector(
             onTap: () {
               Navigator.push(
