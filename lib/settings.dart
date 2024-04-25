@@ -67,19 +67,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
             ),
-            otherAccountsPictures: [
-              IconButton(
-                icon: Icon(Icons.edit, color: Colors.grey),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => EditProfileScreen()),
-                  );
-                },
-              ),
-            ],
           ),
 
+          ListTile(
+            leading: Icon(Icons.person, color: Colors.black),
+            title: Text('Gestionar Cuenta', style: TextStyle(color: Colors.black)),
+            subtitle: Text('Cambia los datos de la cuenta', style: TextStyle(color: Colors.grey)),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EditProfileScreen()),
+              );
+            },
+          ),
           ExpansionTile(
             leading: Icon(Icons.home, color: Colors.black),
             title: const Text('Getionar ubicaciones', style: TextStyle(color: Colors.black)),
