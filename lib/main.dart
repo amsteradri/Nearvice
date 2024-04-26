@@ -144,35 +144,49 @@ class LoginPage extends StatelessWidget {
                       ),
                       SizedBox(height: 16),
 // Ajuste aquí para el icono de Google SVG.
-                      TextButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all(Colors.white),
-                          padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0)), // Aumenta el padding
-                          textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)), // Ajusta el tamaño del texto
-                          minimumSize: MaterialStateProperty.all(Size(180, 50)), // Establece un tamaño mínimo para el botón
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset('assets/images/google.svg', width: 20, height: 20), // Ajusta el tamaño si es necesario
-                            SizedBox(width: 8),
-                            Text('Continuar con Google'),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: TextButton(
+                                onPressed: () {},
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                                  foregroundColor: MaterialStateProperty.all(Colors.black),
+                                  padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0)),
+                                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SvgPicture.asset('assets/images/google.svg', width: 15, height: 15),
+                                    SizedBox(width: 8),
+                                    Text('Continuar con Google'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: TextButton.icon(
+                                onPressed: () {},
+                                icon: Icon(Icons.apple, color: Colors.black),
+                                label: Text('Continuar con Apple'),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                                  foregroundColor: MaterialStateProperty.all(Colors.black),
+                                  padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0)),
+                                  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 8),
-                      TextButton.icon(
-                        onPressed: () {},
-                        icon: Icon(Icons.apple, color: Colors.white),
-                        label: Text('Continuar con Apple'),
-                        style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all(Colors.white),
-                          padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0)), // Aumenta el padding
-                          textStyle: MaterialStateProperty.all(TextStyle(fontSize: 16)), // Aumenta el tamaño del texto
-                          minimumSize: MaterialStateProperty.all(Size(180, 50)), // Establece un tamaño mínimo para el botón
-                        ),
-                      ),
+
                     ],
                   ),
                 ),

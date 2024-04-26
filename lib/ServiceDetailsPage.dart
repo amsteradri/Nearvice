@@ -43,20 +43,74 @@ class ServiceDetailsPage extends StatelessWidget {
                   SizedBox(height: 10),
                   Text('Phone: ${service.phoneNumber}', style: TextStyle(fontSize: 18)),
                   SizedBox(height: 20),
+                  Text('Our Services', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 10),
+                  // Lista de tarjetas con ejemplos de servicios
+                  Container(
+                    height: 200, // Define un alto fijo para el contenedor
+                    child: ListView(
+                      scrollDirection: Axis.horizontal, // Desplazamiento horizontal para las tarjetas
+                      children: <Widget>[
+                        Card(
+                          child: Container(
+                            width: 160,
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Icon(Icons.build, size: 48), // Icono representativo
+                                Text('Installation', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text('All types of installations'),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Card(
+                          child: Container(
+                            width: 160,
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Icon(Icons.cleaning_services, size: 48),
+                                Text('Cleaning', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text('Professional cleaning services'),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Card(
+                          child: Container(
+                            width: 160,
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Icon(Icons.security, size: 48),
+                                Text('Security', style: TextStyle(fontWeight: FontWeight.bold)),
+                                Text('Reliable security solutions'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
                   Text('Available Times', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                  CalendarWidget(), // Modularize calendar to its own widget
+                  CalendarWidget(),
                   SizedBox(height: 20),
                   Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple, // Use theme color
+                        backgroundColor: Colors.deepPurple,
                         padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                         textStyle: TextStyle(fontSize: 18),
                       ),
                       onPressed: () {
-                        // Implementation for booking or contacting
+                        // Implementación para reservas o contacto
                       },
-                      child: Text('Book Now'),  // More direct call-to-action
+                      child: Text('Book Now'),
                     ),
                   ),
                 ],
