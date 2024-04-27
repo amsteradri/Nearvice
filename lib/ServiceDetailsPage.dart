@@ -1,170 +1,141 @@
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'home.dart';  // Ensure this import contains the necessary models like Service.
+import 'package:table_calendar/table_calendar.dart';  // Asegúrate de añadir esto en tus dependencias de pubspec.yaml
+import 'home.dart';
 
-class ServiceDetailsPage extends StatelessWidget {
+
+class ServiceDetailsPage extends StatefulWidget {
   final Service service;
 
-  const ServiceDetailsPage({Key? key, required this.service}) : super(key: key);
+  ServiceDetailsPage({required this.service});
+
+  @override
+  _ServiceDetailsPageState createState() => _ServiceDetailsPageState();
+}
+
+class _ServiceDetailsPageState extends State<ServiceDetailsPage> {
+  String? _selectedService;
+  DateTime _selectedDay = DateTime.now();
+  DateTime _focusedDay = DateTime.now();
+  bool _calendarVisible = false;
 
   @override
   Widget build(BuildContext context) {
+    final service = widget.service;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(service.providerName, style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.black,
-        iconTheme: IconThemeData(color: Colors.white), // Color de la flecha de retroceso
-        centerTitle: true,// A more vibrant color scheme
-        elevation: 0,
+        title: Text(service.providerName + " Details"),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Hero(  // Wrap in a Hero widget for nice transitions
-              tag: 'service_image_1', // Assuming a unique id per service
-              child: Image.asset(
-                service.assetName,
+      body: SingleChildScrollView( // Usa SingleChildScrollView para evitar overflow cuando el calendario se expanda
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image(
+                image: AssetImage(service.assetName),
+                height: 200,
                 width: double.infinity,
-                height: 250,
                 fit: BoxFit.cover,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(service.providerName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 8),
-                  Text(service.serviceName, style: TextStyle(fontSize: 20, color: Colors.grey[700])),
-                  SizedBox(height: 16),
-                  Text('Address: ${service.address}', style: TextStyle(fontSize: 18)),
-                  SizedBox(height: 10),
-                  Text('Phone: ${service.phoneNumber}', style: TextStyle(fontSize: 18)),
-                  SizedBox(height: 20),
-                  Text('Our Services', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 10),
-                  // Lista de tarjetas con ejemplos de servicios
-                  Container(
-                    height: 200, // Define un alto fijo para el contenedor
-                    child: ListView(
-                      scrollDirection: Axis.horizontal, // Desplazamiento horizontal para las tarjetas
-                      children: <Widget>[
-                        Card(
-                          child: Container(
-                            width: 160,
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Icon(Icons.build, size: 48), // Icono representativo
-                                Text('Installation', style: TextStyle(fontWeight: FontWeight.bold)),
-                                Text('All types of installations'),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Card(
-                          child: Container(
-                            width: 160,
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Icon(Icons.cleaning_services, size: 48),
-                                Text('Cleaning', style: TextStyle(fontWeight: FontWeight.bold)),
-                                Text('Professional cleaning services'),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Card(
-                          child: Container(
-                            width: 160,
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Icon(Icons.security, size: 48),
-                                Text('Security', style: TextStyle(fontWeight: FontWeight.bold)),
-                                Text('Reliable security solutions'),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Text('Available Times', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                  CalendarWidget(),
-                  SizedBox(height: 20),
-                  Center(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
-                        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                        textStyle: TextStyle(fontSize: 18),
-                      ),
-                      onPressed: () {
-                        // Implementación para reservas o contacto
-                      },
-                      child: Text('Book Now'),
-                    ),
-                  ),
-                ],
+              SizedBox(height: 20),
+              Text(service.serviceName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              SizedBox(height: 8),
+              Text('Address: ${service.address}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 10),
+              Text('Phone: ${service.phoneNumber}', style: TextStyle(fontSize: 18)),
+              SizedBox(height: 20),
+              Text('Our Services', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              SizedBox(height: 10),
+              Container(
+                height: 160,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    serviceCard('Installation', 'Professional setup at your convenience.', Icons.build, 120.00),
+                    serviceCard('Cleaning', 'Complete and thorough cleaning.', Icons.cleaning_services, 80.00),
+                    serviceCard('Security', 'Top-notch security systems.', Icons.security, 200.00),
+                  ],
+                ),
               ),
-            ),
-          ],
+              if (_calendarVisible) // Mostrar el calendario si la variable está activa
+                Column(
+                  children: [
+                    SizedBox(height: 20),
+                    Text('Available Times for $_selectedService', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                    TableCalendar(
+                      firstDay: DateTime.utc(2010, 10, 16),
+                      lastDay: DateTime.utc(2030, 3, 14),
+                      focusedDay: _focusedDay,
+                      calendarFormat: CalendarFormat.month, // Cambia a formato de mes
+                      selectedDayPredicate: (day) {
+                        return isSameDay(_selectedDay, day);
+                      },
+                      onDaySelected: (selectedDay, focusedDay) {
+                        setState(() {
+                          _selectedDay = selectedDay;
+                          _focusedDay = focusedDay;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    textStyle: TextStyle(fontSize: 18),
+                  ),
+                  onPressed: () {},
+                  child: Text('Book Now'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
-}
 
-class CalendarWidget extends StatefulWidget {
-  @override
-  _CalendarWidgetState createState() => _CalendarWidgetState();
-}
-
-class _CalendarWidgetState extends State<CalendarWidget> {
-  late DateTime _focusedDay;
-  DateTime? _selectedDay;
-
-  @override
-  void initState() {
-    super.initState();
-    _focusedDay = DateTime.now();
-    _selectedDay = _focusedDay;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TableCalendar(
-      firstDay: DateTime.utc(2020, 10, 16),
-      lastDay: DateTime.utc(2030, 3, 14),
-      focusedDay: _focusedDay,
-      selectedDayPredicate: (day) {
-        return isSameDay(_selectedDay, day);
-      },
-      onDaySelected: (selectedDay, focusedDay) {
+  Widget serviceCard(String title, String description, IconData icon, double price) {
+    return GestureDetector(
+      onTap: () {
         setState(() {
-          _selectedDay = selectedDay;
-          _focusedDay = focusedDay; // update `_focusedDay` here to sync with selected day
+          if (_selectedService == title && _calendarVisible) {
+            // Si el servicio ya está seleccionado y el calendario es visible, lo ocultamos
+            _calendarVisible = false;
+          } else {
+            _selectedService = title;  // Al seleccionar un servicio, mostramos el calendario para ese servicio
+            _calendarVisible = true;
+          }
         });
       },
-      onPageChanged: (focusedDay) {
-        _focusedDay = focusedDay;
-      },
-      calendarStyle: CalendarStyle(
-        todayDecoration: BoxDecoration(
-          color: Colors.deepPurple,
-          shape: BoxShape.circle,
-        ),
-        selectedDecoration: BoxDecoration(
-          color: Colors.deepPurple[300],
-          shape: BoxShape.circle,
+      child: Card(
+        elevation: 4,
+        margin: EdgeInsets.symmetric(horizontal: 8),
+        child: Container(
+          width: 300,
+          padding: EdgeInsets.all(16),
+          color: Colors.white,
+          child: Row(
+            children: [
+              Icon(icon, size: 50, color: Colors.deepPurple),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text(description, style: TextStyle(fontSize: 16, color: Colors.grey[800])),
+                    Text('\$${price.toStringAsFixed(2)}', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green[800])),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
