@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nearvice/support.dart';
+import 'package:nearvice/verify_service.dart';
 import 'package:nearvice/verify_user.dart';
 import 'EditProfileScreen.dart';
 import 'AddCardScreen.dart';
@@ -289,12 +290,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text('Verificar', style: TextStyle(color: Colors.black)),
             subtitle: Text('Verifica tu perfil', style: TextStyle(color: Colors.grey)),
             children: <Widget>[
-              ExpansionTile(
+              ListTile(
                 leading: Icon(Icons.business, color: Colors.black),
                 title: Text('Verificar perfil de Empresa', style: TextStyle(color: Colors.black)),
-                children: <Widget>[
-                  // Aquí puedes agregar más opciones para la verificación del perfil de la empresa si es necesario
-                ],
+                onTap: () {
+                  // Navegar a la página de verificación del perfil de empresa
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => VerifyServicePage()),
+                  );
+                },
               ),
               GestureDetector(
                 onTap: () {

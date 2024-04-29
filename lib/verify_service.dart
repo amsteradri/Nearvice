@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class VerifyUserPage extends StatelessWidget {
+class VerifyServicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
