@@ -6,7 +6,7 @@ class VerifyUserPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: MediaQuery.of(context).size.height * 0.08,
-        title: const Text('Verificar', style: TextStyle(color: Colors.white)),
+        title: const Text('Mejorar a Premium', style: TextStyle(color: Colors.white)),
         iconTheme: IconThemeData(color: Colors.white), // Color de la flecha de retroceso
         centerTitle: true,
         backgroundColor: Colors.black,
@@ -143,17 +143,18 @@ class VerifyUserPage extends StatelessWidget {
                         style: TextStyle(fontSize: 20),
                       ),
                       SizedBox(height: 24),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Acción al presionar el botón de comprar
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black, // Color de fondo negro
-                          textStyle: TextStyle(fontSize: 20, color: Colors.white), // Estilo del texto
-                          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16), // Padding del botón
-                        ),
-                        child: Text(
-                          'Conseguir Nearvice Verify',
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Acción al presionar el botón de comprar
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black, // Color de fondo negro
+                            textStyle: TextStyle(fontSize: 20, color: Colors.white), // Estilo del texto
+                            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16), // Padding del botón
+                          ),
+                          child: Text(
+                              'Conseguir Nearvice Verify', style: TextStyle(color: Colors.white)),
                         ),
                       ),
                     ],

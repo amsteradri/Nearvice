@@ -310,7 +310,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
                 child: ListTile(
                   leading: Icon(Icons.person_outline, color: Colors.black),
-                  title: Text('Verificar perfil de Consumidor', style: TextStyle(color: Colors.black)),
+                  title: Text('Consumidor Premium', style: TextStyle(color: Colors.black)),
                 ),
               ),
             ],

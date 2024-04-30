@@ -85,19 +85,21 @@ class VerifyServicePage extends StatelessWidget {
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: () {
-                    // Acción al presionar el botón de comprar
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black, // Color de fondo negro
-                    textStyle: TextStyle(fontSize: 20, color: Colors.white), // Estilo del texto
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16), // Padding del botón
-                  ),
-                  child: Text(
-                    'Conseguir Nearvice Verify',
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Acción al presionar el botón de comprar
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black, // Color de fondo negro
+                      textStyle: TextStyle(fontSize: 20, color: Colors.white), // Estilo del texto
+                      padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16), // Padding del botón
+                    ),
+                    child: Text(
+                        'Conseguir Nearvice Verify', style: TextStyle(color: Colors.white)),
                   ),
                 ),
+
               ],
             ),
           ),
