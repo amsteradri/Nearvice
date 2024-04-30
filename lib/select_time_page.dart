@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'RequestSentPage.dart'; // This is the new page you will create
+import 'RequestSentPage.dart'; // Asegúrate de que este archivo existe
 
 class SelectTimePage extends StatefulWidget {
   @override
@@ -11,14 +11,16 @@ class _SelectTimePageState extends State<SelectTimePage> {
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
   String? _selectedTimeSlot;
+  List<String> timeSlots = List.generate(12, (index) => '${index + 12}:00'); // Slots de tiempo para selección
 
   @override
   Widget build(BuildContext context) {
-    List<String> timeSlots = List.generate(12, (index) => '${index + 12}:00');
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Día y hora', style: TextStyle(color: Colors.white)),
+        toolbarHeight: MediaQuery.of(context).size.height * 0.08,
+        title: const Text('Día y Hora', style: TextStyle(color: Colors.white)),
+        iconTheme: IconThemeData(color: Colors.white),
+        centerTitle: true,
         backgroundColor: Colors.black,
       ),
       body: Padding(
@@ -52,6 +54,7 @@ class _SelectTimePageState extends State<SelectTimePage> {
                 titleTextStyle: TextStyle(color: Colors.white),
               ),
             ),
+            SizedBox(height: 8), // Reducimos el espacio entre el calendario y la grid
             Expanded(
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -87,9 +90,10 @@ class _SelectTimePageState extends State<SelectTimePage> {
             ),
             Container(
               width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 8), // Espacio reducido antes del botón
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black, // Background color
+                  backgroundColor: Colors.black,
                   padding: EdgeInsets.symmetric(vertical: 12),
                 ),
                 onPressed: () {
