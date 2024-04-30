@@ -35,16 +35,25 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 80,
+                      height: 50, // Establece la misma altura para el cuadro de prefijo
                       child: DropdownButtonFormField<String>(
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-                          border: OutlineInputBorder(),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black), // Borde negro
+                          ),
                           filled: true,
-                          fillColor: Colors.grey[800],
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black), // Borde negro en el estado normal
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black), // Borde negro en el estado enfocado
+                          ),
                         ),
-                        dropdownColor: Colors.grey[800],
+                        dropdownColor: Colors.white,
                         value: _selectedPrefix,
                         style: TextStyle(color: Colors.black),
                         onChanged: (value) {
@@ -58,32 +67,38 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                             child: Text(value),
                           );
                         }).toList(),
+                        icon: Icon(Icons.arrow_drop_down, color: Colors.black), // Cambia el color de la flecha a negro
                       ),
                     ),
+
                     SizedBox(width: 10),
                     Expanded(
-                      child: TextFormField(
-                        cursorHeight: 20,
-                        controller: _phoneController,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                          labelText: 'Número de teléfono',
-                          labelStyle: TextStyle(color: Colors.black),
+                      child: SizedBox(
+                        height: 50, // Establece la misma altura para el campo de texto del número de teléfono
+                        child: TextFormField(
+                          cursorHeight: 20,
+                          controller: _phoneController,
+                          style: TextStyle(color: Colors.black),
+                          decoration: InputDecoration(
+                            labelText: 'Número de teléfono',
+                            labelStyle: TextStyle(color: Colors.black),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.black), // Borde en color negro
                             ),
+                          ),
+                          keyboardType: TextInputType.phone,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor, introduce tu número de teléfono';
+                            }
+                            return null;
+                          },
                         ),
-                        keyboardType: TextInputType.phone,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, introduce tu número de teléfono';
-                          }
-                          return null;
-                        },
                       ),
                     ),
                   ],
                 ),
+
               SizedBox(height: 20),
               if (!_isPhoneSubmitted)
                 Center(  // Agrega un widget Center para centrar el botón en su contenedor
