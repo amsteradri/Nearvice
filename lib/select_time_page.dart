@@ -110,7 +110,7 @@ class _SelectTimePageState extends State<SelectTimePage> {
                     );
                   }
                 },
-                child: Text('Siguiente', style: TextStyle(fontSize: 20)),
+                child: Text('Siguiente', style: TextStyle(fontSize: 20, color: Colors.white)),
               ),
             ),
           ],
