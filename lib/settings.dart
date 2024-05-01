@@ -4,6 +4,7 @@ import 'package:nearvice/verify_service.dart';
 import 'package:nearvice/verify_user.dart';
 import 'EditProfileScreen.dart';
 import 'AddCardScreen.dart';
+import 'DiscountPage.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -176,6 +177,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               // Puedes agregar más opciones de ajustes de privacidad aquí
             ],
+          ),
+          ListTile(
+            leading: Icon(Icons.bolt, color: Colors.black),
+            title: Text('Ofertas y Promociones', style: TextStyle(color: Colors.black)),
+            subtitle: Text('Cambia los datos de la cuenta', style: TextStyle(color: Colors.grey)),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DiscountPage()),
+              );
+            },
           ),
           ExpansionTile(
             leading: Icon(Icons.sunny, color: Colors.black),
