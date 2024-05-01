@@ -5,6 +5,7 @@ import 'package:nearvice/verify_user.dart';
 import 'EditProfileScreen.dart';
 import 'AddCardScreen.dart';
 import 'DiscountPage.dart';
+import 'nearvice_info_page.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -328,7 +329,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           ExpansionTile(
-            leading: Icon(Icons.info_outline, color: Colors.black),
+            leading: Icon(Icons.question_mark_outlined, color: Colors.black),
             title: Text('FAQ', style: TextStyle(color: Colors.black)),
             subtitle: Text('Algunas preguntas frequentes', style: TextStyle(color: Colors.grey)),
             children: <Widget>[
@@ -396,6 +397,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
 
 
+
           GestureDetector(
             onTap: () {
               Navigator.push(
@@ -407,10 +409,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
               leading: Icon(Icons.live_help, color: Colors.black),
               title: Text('Soporte', style: TextStyle(color: Colors.black)),
             ),
-          )
+          ),
 
 
-
+          ListTile(
+            leading: Icon(Icons.info_outlined, color: Colors.black),
+            title: Text('Acerca de Nearvice', style: TextStyle(color: Colors.black)),
+            subtitle: Text('Cambia los datos de la cuenta', style: TextStyle(color: Colors.grey)),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NearviceInfoPage()),
+              );
+            },
+          ),
           // ... Más ListTiles para cada opción de ajustes
         ],
       ),
