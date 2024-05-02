@@ -3,6 +3,7 @@ import 'custom_bottom_nav_bar.dart';
 import 'settings.dart';
 import 'ServiceHistoryScreen.dart';
 import 'RatingHistoryScreen.dart';
+import 'InviteFriendsScreen.dart';
 
 class SegundaPantalla extends StatefulWidget {
   const SegundaPantalla({Key? key}) : super(key: key);
@@ -101,26 +102,63 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
             ),
           ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildStatCard(
-                'Valoraciones',
-                '30.000',
-                Icons.star,
+          ElevatedButton(
+            onPressed: () {
+              // Navega a la pantalla de Invitar Amigos
+              Navigator.push(
                 context,
-                    () => Navigator.push(context, MaterialPageRoute(builder: (context) => RatingHistoryScreen())),
+                MaterialPageRoute(builder: (context) => InviteFriendsScreen()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue, // Color del botón
+              foregroundColor: Colors.white, // Color del texto
+              elevation: 2, // Elevación del botón
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10), // Borde redondeado del botón
               ),
-              const SizedBox(height: 15),
-              _buildStatCard(
-                'Servicios perfectos',
-                '300',
-                Icons.check_circle,
-                context,
-                    () => Navigator.push(context, MaterialPageRoute(builder: (context) => ServiceHistoryScreen())),
-              ),
-            ],
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15), // Padding del botón
+            ),
+            child: Text(
+              'Invitar a Amigos',
+              style: TextStyle(fontSize: 16),
+            ),
           ),
+
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20), // Añade un padding horizontal al Row completo
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8), // Añade un padding derecho a la primera tarjeta
+                    child: _buildStatCard(
+                      'Valoraciones',
+                      '30.000',
+                      Icons.star,
+                      context,
+                          () => Navigator.push(context, MaterialPageRoute(builder: (context) => RatingHistoryScreen())),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8), // Añade un padding izquierdo a la segunda tarjeta
+                    child: _buildStatCard(
+                      'Servicios perfectos',
+                      '300',
+                      Icons.check_circle,
+                      context,
+                          () => Navigator.push(context, MaterialPageRoute(builder: (context) => ServiceHistoryScreen())),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
