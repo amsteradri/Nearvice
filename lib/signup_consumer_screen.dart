@@ -86,7 +86,7 @@ class _SignUpConsumerScreenState extends State<SignUpConsumerScreen> {
               SizedBox(height: 40),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Background color
+                  backgroundColor: Colors.black, // Background color
                   foregroundColor: Colors.white, // Text Color (Foreground color)
                 ),
                 child: Text('Siguiente'),

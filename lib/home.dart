@@ -9,9 +9,12 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
+
+
 class _MainPageState extends State<MainPage> {
   Map<String, bool> _selectedFilters = {};
   TextEditingController _searchController = TextEditingController();
+  String _sortOrder = 'Name'; // Orden de clasificación actual
   Map<String, String> _filterEmojis = {
     'Cerrajero': '🔑',
     'Fontanero': '🚰',
@@ -241,6 +244,22 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  void _sortServices(String order) {
+    setState(() {
+      _sortOrder = order;
+      if (order == 'Name') {
+        filteredServices.sort((a, b) => a.providerName.compareTo(b.providerName));
+      } else if (order == 'Favorites') {
+        // Ordenando primero los favoritos
+        filteredServices.sort((a, b) {
+          if (b.isFavorited && !a.isFavorited) return 1;
+          else if (!b.isFavorited && a.isFavorited) return -1;
+          return 0;
+        });
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -299,15 +318,18 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: IconButton(
-                icon: Icon(Icons.filter_alt_outlined, color: Colors.grey),
-                onPressed: () {
-                  // Acción al hacer clic en el icono de filtros
-                },
-              ),
+          actions: <Widget>[
+            PopupMenuButton<String>(
+              onSelected: _sortServices,
+              itemBuilder: (BuildContext context) {
+                return {'Name', 'Favorites'}.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
+              },
+              icon: Icon(Icons.sort, color: Colors.white),
             ),
           ],
           iconTheme: IconThemeData(size: 28),

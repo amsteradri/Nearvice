@@ -111,8 +111,8 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                       });
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue, // Background color
-                      foregroundColor: Colors.black, // Text Color
+                      backgroundColor: Colors.black, // Background color
+                      foregroundColor: Colors.white, // Text Color
                       minimumSize: Size(200, 50),  // Establece el tamaño mínimo del botón
                       maximumSize: Size(200, 50),  // Establece el tamaño máximo del botón
                     ),
