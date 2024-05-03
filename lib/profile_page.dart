@@ -136,7 +136,7 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
                     padding: const EdgeInsets.only(right: 8), // Añade un padding derecho a la primera tarjeta
                     child: _buildStatCard(
                       'Valoraciones',
-                      '30.000',
+                      '30',
                       Icons.star,
                       context,
                           () => Navigator.push(context, MaterialPageRoute(builder: (context) => RatingHistoryScreen())),

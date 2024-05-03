@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:nearvice/activity.dart'; // Assuming 'ChatItem' is defined in this file
-import 'chat.dart'; // Ensure this file exists and defines a ChatScreen widget
+import 'ChatForService.dart'; // Ensure this file exists and defines a ChatScreen widget
+import 'ServiceEnded.dart';
 
 class RequestConfirmationPage extends StatefulWidget {
   final DateTime selectedDay;
@@ -44,13 +45,18 @@ class _RequestConfirmationPageState extends State<RequestConfirmationPage> {
     );
 
     // Navigate to the ChatScreen with the ChatItem
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ChatScreen(chat: chat),
+        builder: (context) => ChatScreen(
+          chat: chat,
+          selectedDay: widget.selectedDay,
+          selectedTimeSlot: widget.selectedTimeSlot,
+        ),
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
