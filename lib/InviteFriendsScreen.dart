@@ -8,6 +8,7 @@ class InviteFriendsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Invitar', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
+        centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),

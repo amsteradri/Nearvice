@@ -4,6 +4,7 @@ import 'settings.dart';
 import 'ServiceHistoryScreen.dart';
 import 'RatingHistoryScreen.dart';
 import 'InviteFriendsScreen.dart';
+import 'ProfileView.dart';
 
 class SegundaPantalla extends StatefulWidget {
   const SegundaPantalla({Key? key}) : super(key: key);
@@ -86,12 +87,21 @@ class _SegundaPantallaState extends State<SegundaPantalla> {
                   strokeWidth: 6,
                 ),
               ),
-              const CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/images/profile_pic.jpg'),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                  );
+                },
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage('assets/images/profile_pic.jpg'),
+                ),
               ),
             ],
           ),
+
           const SizedBox(height: 20),
           const Text(
             'Nivel 1',

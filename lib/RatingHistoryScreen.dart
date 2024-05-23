@@ -13,8 +13,9 @@ class RatingHistoryScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Historial de Valoraciones'),
-        backgroundColor: Colors.blue,
+        title: Text('Historial de Valoraciones', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.black,
+        centerTitle: true,
       ),
       body: ListView.builder(
         itemCount: ratings.length,
